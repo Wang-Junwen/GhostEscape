@@ -32,8 +32,10 @@ find_package(glm REQUIRED)
 
 # 添加可执行文件
 add_executable(${TARGET} 
-                src/game.cpp
-                src/main.cpp)
+                src/core/game.cpp
+                src/main.cpp
+                src/scene_main.cpp
+                )
 
 # 链接库
 target_link_libraries(${TARGET}

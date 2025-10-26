@@ -1,4 +1,5 @@
 #include "game.h"
+#include "../scene_main.h"
 
 void Game::run()
 {
@@ -55,6 +56,10 @@ void Game::init(std::string title, int width, int height)
 
     // 计算帧延迟
     frame_delay_ = static_cast<Uint64>(1000000000.0f / FPS_); // ns
+
+    // 创建场景
+    current_scene_ = new SceneMain();
+    current_scene_->init();
 }
 
 void Game::handleEvents()
@@ -66,21 +71,32 @@ void Game::handleEvents()
             is_running_ = false;
             break;
         default:
-            break;
+            current_scene_->handleEvents(event);
         }
     }
 }
 
 void Game::update(float dt)
 {
+    current_scene_->update(dt);
 }
 
 void Game::render()
 {
+    SDL_SetRenderDrawColor(renderer_, 0, 0, 0, 255);    // 为清屏操作准备颜色
+    SDL_RenderClear(renderer_);          // 清屏
+    current_scene_->render();
+    SDL_RenderPresent(renderer_);        // 渲染
 }
 
 void Game::clean()
 {
+    // 清理当前场景
+    if (current_scene_){
+        current_scene_->clean();
+        delete current_scene_;
+        current_scene_ = nullptr;
+    }
     // 释放渲染器和窗口
     if (renderer_){
         SDL_DestroyRenderer(renderer_);

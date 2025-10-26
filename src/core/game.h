@@ -8,11 +8,13 @@
 #include <glm/glm.hpp>
 #include <string>
 
+class Scene; // 前向声明，而不是引入scene.h头文件，防止循环引用等
 // 单例模式
 class Game
 {  
     glm::vec2 screen_size_; // 屏幕尺寸
     bool is_running_ = true; // 游戏是否运行
+    Scene* current_scene_ = nullptr; // 当前场景
 
     Uint64 FPS_ = 60; // 帧率
     Uint64 frame_delay_ = 0; // 帧延迟, 单位ns, init中计算
