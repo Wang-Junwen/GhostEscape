@@ -1,11 +1,20 @@
 #include "scene_main.h"
+#include "player.h"
 
 void SceneMain::init()
 {
+    world_size_ = game_.getScreenSize() * 3.0f; // 世界尺寸为屏幕尺寸的三倍
+    camera_pos_ = world_size_ / 2.0f - game_.getScreenSize() / 2.0f; // 相机位置
+
+    player_ = new Player();
+    player_->init();
+    player_->setPosition(world_size_ / 2.0f); // 玩家初始位置在世界中心
 }
 
 void SceneMain::update(float dt)
 {
+    // camera_pos_ += glm::vec2(10.0f, 10.0f); // 相机移动
+    player_->update(dt);
 }
 
 void SceneMain::handleEvents(SDL_Event &event)
@@ -14,8 +23,30 @@ void SceneMain::handleEvents(SDL_Event &event)
 
 void SceneMain::render()
 {
+    renderBackground();
+    player_->render();
 }
 
 void SceneMain::clean()
 {
+    player_->clean();
+    delete player_;
+}
+
+void SceneMain::renderBackground()
+{
+    // 绘制背景网格
+    auto start = - camera_pos_; // 起始位置
+    auto end = world_size_ - camera_pos_; // 结束位置 
+    game_.drawGrid(
+        start,
+        end,
+        80.0f,
+        SDL_FColor{0.5f, 0.5f, 0.5f, 1.0f});
+    // 绘制边框
+    game_.drawBoundary(
+        start,
+        end,
+        5.0f,
+        SDL_FColor{1.0f, 1.0f, 1.0f, 1.0f});
 }
