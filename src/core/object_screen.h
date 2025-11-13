@@ -8,8 +8,8 @@ class ObjectScreen : public Object
 protected:
     glm::vec2 render_position_ = glm::vec2(0.0f); // 渲染位置
 
-
 public:
+    virtual void init() override { type_ = ObjectType::OBJECT_SCREEN; }
     // getters and setters
     glm::vec2 getRenderPosition() const { return render_position_; }
     virtual void setRenderPosition(const glm::vec2 &pos) { render_position_ = pos; }

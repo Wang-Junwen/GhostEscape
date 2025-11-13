@@ -9,28 +9,28 @@ void SceneMain::init()
     player_ = new Player();
     player_->init();
     player_->setPosition(world_size_ / 2.0f); // 玩家初始位置在世界中心
+    addChild(player_);
 }
 
 void SceneMain::update(float dt)
 {
-    // camera_pos_ += glm::vec2(10.0f, 10.0f); // 相机移动
-    player_->update(dt);
+    Scene::update(dt);
 }
 
 void SceneMain::handleEvents(SDL_Event &event)
 {
+    Scene::handleEvents(event);
 }
 
 void SceneMain::render()
 {
     renderBackground();
-    player_->render();
+    Scene::render();
 }
 
 void SceneMain::clean()
 {
-    player_->clean();
-    delete player_;
+    Scene::clean();
 }
 
 void SceneMain::renderBackground()

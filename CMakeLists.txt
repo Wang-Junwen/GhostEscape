@@ -34,7 +34,12 @@ find_package(glm REQUIRED)
 add_executable(${TARGET} 
                 src/core/game.cpp
                 src/core/scene.cpp
+                src/core/object.cpp
                 src/core/object_world.cpp
+                src/core/object_affiliate.cpp
+                src/core/asset_store.cpp
+                src/affiliate/sprite.cpp
+                src/affiliate/sprite_anim.cpp
                 src/player.cpp
                 src/main.cpp
                 src/scene_main.cpp

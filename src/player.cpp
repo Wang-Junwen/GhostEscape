@@ -1,13 +1,17 @@
 #include "player.h"
 #include "core/scene.h"
+#include "affiliate/sprite_anim.h"
 
 void Player::init()
 {
+    Actor::init(); // 调用父类初始化函数
     max_speed_ = 500.0f;
+    SpriteAnim::addSpriteAnimChild(this, "assets/sprite/ghost-idle.png", 2.0f);
 }
 
 void Player::update(float dt)
 {
+    Actor::update(dt); // 调用父类更新函数
     velocity_ *= 0.9f; // 惯性
     keyboardControl();
     move(dt);
@@ -16,15 +20,17 @@ void Player::update(float dt)
 
 void Player::handleEvents(SDL_Event &event)
 {
+    Actor::handleEvents(event); // 调用父类事件处理函数
 }
 
 void Player::render()
 {
-    game_.drawBoundary(render_position_, render_position_ + glm::vec2(20.0f), 5.0f, SDL_FColor{1.0f, 0.0f, 0.0f, 1.0f});
+    Actor::render(); // 调用父类渲染函数
 }
 
 void Player::clean()
 {
+    Actor::clean(); // 调用父类清理函数
 }
 
 void Player::keyboardControl()
@@ -50,7 +56,7 @@ void Player::keyboardControl()
 
 void Player::move(float dt)
 {
-    auto pos_ = glm::clamp(position_ + velocity_ * dt, glm::vec2(0.0f), game_.getCurrentScene()->getWorldSize());     // 边界检测
+    auto pos_ = glm::clamp(position_ + velocity_ * dt, glm::vec2(0.0f), game_.getCurrentScene()->getWorldSize()); // 边界检测
     setPosition(pos_);
 }
 

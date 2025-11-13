@@ -7,46 +7,53 @@
 #include <SDL3_ttf/SDL_ttf.h>
 #include <glm/glm.hpp>
 #include <string>
+#include "asset_store.h"
 
+struct TextureInfo;
 class Scene; // 前向声明，而不是引入scene.h头文件，防止循环引用等
 // 单例模式
 class Game
-{  
-    glm::vec2 screen_size_; // 屏幕尺寸
-    bool is_running_ = true; // 游戏是否运行
-    Scene* current_scene_ = nullptr; // 当前场景
+{
+    AssetStore *asset_store_ = nullptr; // 资源管理器
+    glm::vec2 screen_size_;             // 屏幕尺寸
+    bool is_running_ = true;            // 游戏是否运行
+    Scene *current_scene_ = nullptr;    // 当前场景
 
-    Uint64 FPS_ = 60; // 帧率
+    Uint64 FPS_ = 60;        // 帧率
     Uint64 frame_delay_ = 0; // 帧延迟, 单位ns, init中计算
-    float dt_ = 0.0f; // 每帧时间间隔, 单位s
+    float dt_ = 0.0f;        // 每帧时间间隔, 单位s
 
-    SDL_Window* window_ = nullptr; // 窗口
-    SDL_Renderer* renderer_ = nullptr; // 渲染器
+    SDL_Window *window_ = nullptr;     // 窗口
+    SDL_Renderer *renderer_ = nullptr; // 渲染器
 
-    Game(){};
-    Game(const Game&) = delete;
-    Game& operator=(const Game&) = delete;
+    Game() {};
+    Game(const Game &) = delete;
+    Game &operator=(const Game &) = delete;
 
 public:
-    static Game& GetInstance()
+    static Game &GetInstance()
     {
         static Game instance;
         return instance;
     };
 
-    void run(); // 游戏主循环
+    void run();                                          // 游戏主循环
     void init(std::string title, int width, int height); // 初始化游戏
-    void handleEvents(); // 处理事件
-    void update(float dt); // 更新游戏状态
-    void render(); // 渲染游戏画面
-    void clean(); // 清理游戏资源
+    void handleEvents();                                 // 处理事件
+    void update(float dt);                               // 更新游戏状态
+    void render();                                       // 渲染游戏画面
+    void clean();                                        // 清理游戏资源
 
     // getters and setters
     glm::vec2 getScreenSize() const { return screen_size_; }
-    Scene* getCurrentScene() const { return current_scene_; }
+    Scene *getCurrentScene() const { return current_scene_; }
+    AssetStore *getAssetStore() const { return asset_store_; }
+
+    // 渲染函数
+    void renderTexture(const TextureInfo &texture, glm::vec2 &position, const glm::vec2 &size); // 渲染纹理
 
     // 工具函数
-    void drawGrid(const glm::vec2 &top_left, const glm::vec2 &bottom_right, float grid_width, SDL_FColor fcolor); // 绘制网格
+    void drawGrid(const glm::vec2 &top_left, const glm::vec2 &bottom_right, float grid_width, SDL_FColor fcolor);         // 绘制网格
     void drawBoundary(const glm::vec2 &top_left, const glm::vec2 &bottom_right, float boundary_width, SDL_FColor fcolor); // 绘制边界
 };
 

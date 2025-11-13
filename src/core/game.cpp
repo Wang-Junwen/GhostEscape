@@ -3,6 +3,7 @@
 #include "object_screen.h"
 #include "object_world.h"
 #include "actor.h"
+#include "../affiliate/sprite.h"
 
 void Game::run()
 {
@@ -67,6 +68,9 @@ void Game::init(std::string title, int width, int height)
     // 计算帧延迟
     frame_delay_ = static_cast<Uint64>(1000000000.0f / FPS_); // ns
 
+    // 创建资源管理器
+    asset_store_ = new AssetStore(renderer_);
+
     // 创建场景
     current_scene_ = new SceneMain();
     current_scene_->init();
@@ -110,6 +114,12 @@ void Game::clean()
         delete current_scene_;
         current_scene_ = nullptr;
     }
+    if (asset_store_)
+    {
+        asset_store_->clean();
+        delete asset_store_;
+        asset_store_ = nullptr;
+    }
     // 释放渲染器和窗口
     if (renderer_)
     {
@@ -126,6 +136,12 @@ void Game::clean()
     TTF_Quit();
     // 释放SDL
     SDL_Quit();
+}
+
+void Game::renderTexture(const TextureInfo &texture_info, glm::vec2 &position, const glm::vec2 &size)
+{
+    SDL_FRect dstRect = {position.x, position.y, size.x, size.y};
+    SDL_RenderTextureRotated(renderer_, texture_info.texture, &texture_info.src_rect, &dstRect, texture_info.angle, nullptr, texture_info.is_flip ? SDL_FLIP_HORIZONTAL : SDL_FLIP_NONE);
 }
 
 void Game::drawGrid(const glm::vec2 &top_left, const glm::vec2 &bottom_right, float grid_width, SDL_FColor fcolor)
