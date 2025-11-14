@@ -26,5 +26,9 @@ public:
     // getters and setters
     TextureInfo getTextureInfo() { return texture_info_; }
     virtual void setTextureInfo(const TextureInfo &texture);
+    void setFlip(bool is_flip) { texture_info_.is_flip = is_flip; }
+    bool getFlip() { return texture_info_.is_flip; }
+    void setAngle(float angle) { texture_info_.angle = angle; }
+    float getAngle() { return texture_info_.angle; }
 };
 #endif // SPRITE_H

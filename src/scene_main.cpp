@@ -1,5 +1,6 @@
 #include "scene_main.h"
 #include "player.h"
+#include "enemy.h"
 
 void SceneMain::init()
 {
@@ -10,6 +11,13 @@ void SceneMain::init()
     player_->init();
     player_->setPosition(world_size_ / 2.0f); // 玩家初始位置在世界中心
     addChild(player_);
+
+    // 创建敌人
+    auto enemy = new Enemy();
+    enemy->init();
+    enemy->setPosition(world_size_ / 2.0f + glm::vec2(200.0f, 0.0f)); // 敌人初始位置
+    enemy->setTarget(player_);
+    addChild(enemy);
 }
 
 void SceneMain::update(float dt)

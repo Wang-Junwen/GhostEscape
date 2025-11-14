@@ -11,6 +11,7 @@ protected:
     ObjectType type_ = ObjectType::NONE; // 对象类型
     Game &game_ = Game::GetInstance();
     std::vector<Object *> children_; // 子对象列表
+    bool is_active_ = true; // 对象是否激活
 
 public:
     Object() = default;
@@ -28,6 +29,8 @@ public:
     // getters and setters
     ObjectType getType() const { return type_; }
     void setType(ObjectType type) { type_ = type; }
+    void setActive(bool is_active) { is_active_ = is_active; }
+    bool isActive() const { return is_active_; }
 };
 
 #endif // OBJECT_H

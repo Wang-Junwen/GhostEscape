@@ -5,31 +5,52 @@ void Scene::update(float dt)
     Object::update(dt);
     // 先更新世界物体，再更新屏幕物体
     for (auto &child : children_world_)
-        child->update(dt);
+    {
+        if (child->isActive()){
+            child->update(dt);
+        }
+    }
     for (auto &child : children_screen_)
-        child->update(dt);
+    {
+        if (child->isActive()){
+            child->update(dt);
+        }
+    }
 }
-
 void Scene::handleEvents(SDL_Event &event)
 {
     Object::handleEvents(event);
     // 先处理屏幕事件，再处理世界事件
     for (auto &child : children_screen_)
-        child->handleEvents(event);
+    { 
+        if (child->isActive()){
+            child->handleEvents(event);
+        }
+    }
     for (auto &child : children_world_)
-        child->handleEvents(event);
+    {
+        if (child->isActive()){
+            child->handleEvents(event);
+        }
+    }
 }
-
 void Scene::render()
 {
     Object::render();
     // 先渲染世界物体，再渲染屏幕物体
     for (auto &child : children_world_)
-        child->render();
+    {
+        if (child->isActive()){
+            child->render();
+        }
+    }
     for (auto &child : children_screen_)
-        child->render();
+    {
+        if (child->isActive()){
+            child->render();
+        }
+    }
 }
-
 void Scene::clean()
 {
     Object::clean();
