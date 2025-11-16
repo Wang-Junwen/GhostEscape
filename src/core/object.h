@@ -12,6 +12,7 @@ protected:
     Game &game_ = Game::GetInstance();
     std::vector<Object *> children_; // 子对象列表
     bool is_active_ = true; // 对象是否激活
+    bool need_remove_ = false; // 对象是否需要移除
 
 public:
     Object() = default;
@@ -30,7 +31,9 @@ public:
     ObjectType getType() const { return type_; }
     void setType(ObjectType type) { type_ = type; }
     void setActive(bool is_active) { is_active_ = is_active; }
-    bool isActive() const { return is_active_; }
+    bool getActive() const { return is_active_; }
+    void setNeedRemove(bool need_remove) { need_remove_ = need_remove; }
+    bool getNeedRemove() const { return need_remove_; }
 };
 
 #endif // OBJECT_H

@@ -17,6 +17,7 @@ class Sprite : public ObjectAffiliate
 {
 protected:
     TextureInfo texture_info_; // 纹理对象
+    bool is_finish_ = false;    // 纹理是否加载完成
 public:
     static Sprite *addSpriteChild(ObjectScreen *parent, const std::string &file_path, float scale = 1.0f);
     virtual void render() override;
@@ -30,5 +31,7 @@ public:
     bool getFlip() { return texture_info_.is_flip; }
     void setAngle(float angle) { texture_info_.angle = angle; }
     float getAngle() { return texture_info_.angle; }
+    void setFinish(bool finish) { is_finish_ = finish; }
+    bool getFinish() { return is_finish_; }
 };
 #endif // SPRITE_H

@@ -19,12 +19,7 @@ Sprite *Sprite::addSpriteChild(ObjectScreen *parent, const std::string &file_pat
 
 void Sprite::render()
 {
-    if (texture_info_.texture == nullptr){
-        return;
-    }
-    if (parent_ == nullptr){
-        return;
-    }
+    if (!texture_info_.texture || !parent_ || is_finish_) return;
     // 计算渲染位置，相对父节点偏移
     auto pos = parent_->getRenderPosition() + offset_;
     Game::GetInstance().renderTexture(texture_info_, pos, size_); 

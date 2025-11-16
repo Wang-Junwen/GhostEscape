@@ -4,16 +4,38 @@ void Scene::update(float dt)
 {
     Object::update(dt);
     // 先更新世界物体，再更新屏幕物体
-    for (auto &child : children_world_)
+    for (auto it = children_world_.begin(); it != children_world_.end();)
     {
-        if (child->isActive()){
+        auto child = *it;
+        if (child->getNeedRemove())
+        {
+            it = children_world_.erase(it);
+            child->clean();
+            SDL_Log("Scene remove world child: [%s]",typeid(*child).name());
+            delete child;
+            continue;
+        }
+        if (child->getActive())
+        {
             child->update(dt);
+            ++it;
         }
     }
-    for (auto &child : children_screen_)
+    for (auto it = children_screen_.begin(); it != children_screen_.end();)
     {
-        if (child->isActive()){
+        auto child = *it;
+        if (child->getNeedRemove())
+        {
+            it = children_screen_.erase(it);
+            child->clean();
+            SDL_Log("Scene remove screen child: [%s]",typeid(*child).name());
+            delete child;
+            continue;
+        }
+        if (child->getActive())
+        {
             child->update(dt);
+            ++it;
         }
     }
 }
@@ -22,14 +44,16 @@ void Scene::handleEvents(SDL_Event &event)
     Object::handleEvents(event);
     // 先处理屏幕事件，再处理世界事件
     for (auto &child : children_screen_)
-    { 
-        if (child->isActive()){
+    {
+        if (child->getActive())
+        {
             child->handleEvents(event);
         }
     }
     for (auto &child : children_world_)
     {
-        if (child->isActive()){
+        if (child->getActive())
+        {
             child->handleEvents(event);
         }
     }
@@ -40,13 +64,15 @@ void Scene::render()
     // 先渲染世界物体，再渲染屏幕物体
     for (auto &child : children_world_)
     {
-        if (child->isActive()){
+        if (child->getActive())
+        {
             child->render();
         }
     }
     for (auto &child : children_screen_)
     {
-        if (child->isActive()){
+        if (child->getActive())
+        {
             child->render();
         }
     }

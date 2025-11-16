@@ -13,6 +13,7 @@ public:
     // getters and setters
     glm::vec2 getRenderPosition() const { return render_position_; }
     virtual void setRenderPosition(const glm::vec2 &pos) { render_position_ = pos; }
+    virtual glm::vec2 getPosition() const { return glm::vec2(0.0f); };
 };
 
 #endif // OBJECT_SCREEN_H

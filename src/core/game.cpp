@@ -144,6 +144,14 @@ void Game::renderTexture(const TextureInfo &texture_info, glm::vec2 &position, c
     SDL_RenderTextureRotated(renderer_, texture_info.texture, &texture_info.src_rect, &dstRect, texture_info.angle, nullptr, texture_info.is_flip ? SDL_FLIP_HORIZONTAL : SDL_FLIP_NONE);
 }
 
+void Game::renderFillCircle(const glm::vec2 &position, const glm::vec2 &size, float alpha)
+{
+    auto texture = asset_store_->getTexture("assets/UI/circle.png");
+    SDL_FRect dstRect = {position.x, position.y, size.x, size.y};
+    SDL_SetTextureAlphaModFloat(texture, alpha);
+    SDL_RenderTexture(renderer_, texture, nullptr, &dstRect);
+}
+
 void Game::drawGrid(const glm::vec2 &top_left, const glm::vec2 &bottom_right, float grid_width, SDL_FColor fcolor)
 {
     SDL_SetRenderDrawColorFloat(renderer_, fcolor.r, fcolor.g, fcolor.b, fcolor.a);

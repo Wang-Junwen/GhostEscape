@@ -2,11 +2,23 @@
 
 void Object::update(float dt)
 {
-    for (auto child : children_)
+    for (auto it = children_.begin(); it != children_.end();)
     {
-        if (child->isActive()){
+        auto child = *it;
+        if (child->getNeedRemove())
+        {
+            it = children_.erase(it);
+            child->clean();
+            SDL_Log("Object remove child: [%s]",typeid(*child).name());
+            delete child;
+            continue;
+        }
+
+        if (child->getActive())
+        {
             child->update(dt);
         }
+        ++it;
     }
 }
 
@@ -14,7 +26,8 @@ void Object::handleEvents(SDL_Event &event)
 {
     for (auto child : children_)
     {
-        if (child->isActive()){
+        if (child->getActive())
+        {
             child->handleEvents(event);
         }
     }
@@ -24,7 +37,8 @@ void Object::render()
 {
     for (auto child : children_)
     {
-        if (child->isActive()){
+        if (child->getActive())
+        {
             child->render();
         }
     }

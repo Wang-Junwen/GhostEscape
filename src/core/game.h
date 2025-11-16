@@ -51,6 +51,7 @@ public:
 
     // 渲染函数
     void renderTexture(const TextureInfo &texture, glm::vec2 &position, const glm::vec2 &size); // 渲染纹理
+    void renderFillCircle(const glm::vec2& position, const glm::vec2& size, float alpha);                     // 渲染实心圆
 
     // 工具函数
     void drawGrid(const glm::vec2 &top_left, const glm::vec2 &bottom_right, float grid_width, SDL_FColor fcolor);         // 绘制网格

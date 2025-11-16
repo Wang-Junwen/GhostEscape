@@ -9,6 +9,7 @@ class SpriteAnim : public Sprite
     int total_frames_ = 0;     // 总帧数
     int fps_ = 10;             // 帧率
     float frame_timer_ = 0.0f; // 帧计时器
+    bool is_loop_ = true;    // 是否循环播放
 
 public:
     static SpriteAnim *addSpriteAnimChild(ObjectScreen *parent, const std::string &file_path, float scale = 1.0f);
@@ -25,6 +26,8 @@ public:
     void setFps(int fps) { fps_ = fps; }
     float getFrameTimer() const { return frame_timer_; }
     void setFrameTimer(float frame_timer) { frame_timer_ = frame_timer; }
+    bool getLoop() const { return is_loop_; }
+    void setLoop(bool is_loop) { is_loop_ = is_loop; }
 };
 
 #endif // SPRITE_ANIM_H

@@ -1,6 +1,8 @@
 #include "player.h"
 #include "core/scene.h"
 #include "affiliate/sprite_anim.h"
+#include "affiliate/collider.h"
+
 
 void Player::init()
 {
@@ -9,6 +11,8 @@ void Player::init()
     sprite_idle_ = SpriteAnim::addSpriteAnimChild(this, "assets/sprite/ghost-idle.png", 2.0f);
     sprite_move_ = SpriteAnim::addSpriteAnimChild(this, "assets/sprite/ghost-move.png", 2.0f);
     sprite_move_->setActive(false); // 初始不显示移动动画
+
+    collider_ = Collider::addColliderChild(this, sprite_idle_->getSize());
 }
 
 void Player::update(float dt)
