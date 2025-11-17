@@ -6,7 +6,19 @@ void Collider::render()
     ObjectAffiliate::render();
     auto pos = parent_->getRenderPosition() + offset_;
     game_.renderFillCircle(pos, size_, 0.3f); // 半透明圆圈，用于表示碰撞体积
-#endif  // DEBUG_MODE
+#endif                                        // DEBUG_MODE
+}
+
+Collider *Collider::addColliderChild(ObjectScreen *parent, const glm::vec2 &size, ColliderType type, Anchor anchor)
+{
+    Collider *collider = new Collider();
+    collider->init();
+    collider->setAnchor(anchor);
+    collider->setParent(parent);
+    collider->setSize(size);
+    collider->setColliderType(type);
+    parent->addChild(collider);
+    return collider;
 }
 
 bool Collider::isColliding(const Collider &other)

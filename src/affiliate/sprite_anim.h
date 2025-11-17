@@ -12,7 +12,7 @@ class SpriteAnim : public Sprite
     bool is_loop_ = true;    // 是否循环播放
 
 public:
-    static SpriteAnim *addSpriteAnimChild(ObjectScreen *parent, const std::string &file_path, float scale = 1.0f);
+    static SpriteAnim *addSpriteAnimChild(ObjectScreen *parent, const std::string &file_path, float scale = 1.0f, Anchor anchor = Anchor::CENTER);
     virtual void update(float dt) override; // 更新动画
 
     // getters and setters

@@ -12,17 +12,7 @@ public:
 
     virtual void render() override;
 
-    static Collider* addColliderChild(ObjectScreen *parent, const glm::vec2 &size, ColliderType type = ColliderType::CIRCLE)
-    {
-        Collider *collider = new Collider();
-        collider->init();
-        collider->setParent(parent);
-        collider->setSize(size);
-        collider->setColliderType(type);
-        parent->addChild(collider);
-        return collider;
-    }
-
+    static Collider* addColliderChild(ObjectScreen *parent, const glm::vec2 &size, ColliderType type = ColliderType::CIRCLE, Anchor anchor = Anchor::CENTER);
     bool isColliding(const Collider &other);
 
     // getters and setters

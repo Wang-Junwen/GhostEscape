@@ -12,7 +12,7 @@ void Player::init()
     sprite_move_ = SpriteAnim::addSpriteAnimChild(this, "assets/sprite/ghost-move.png", 2.0f);
     sprite_move_->setActive(false); // 初始不显示移动动画
 
-    collider_ = Collider::addColliderChild(this, sprite_idle_->getSize());
+    collider_ = Collider::addColliderChild(this, sprite_idle_->getSize() / 2.0f);
 }
 
 void Player::update(float dt)

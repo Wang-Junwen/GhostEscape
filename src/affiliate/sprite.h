@@ -18,11 +18,11 @@ class Sprite : public ObjectAffiliate
 protected:
     TextureInfo texture_info_; // 纹理对象
     bool is_finish_ = false;    // 纹理是否加载完成
+    
 public:
-    static Sprite *addSpriteChild(ObjectScreen *parent, const std::string &file_path, float scale = 1.0f);
+    static Sprite *addSpriteChild(ObjectScreen *parent, const std::string &file_path, float scale = 1.0f, Anchor anchor = Anchor::CENTER);
     virtual void render() override;
 
-    void setScale(float scale) {size_ *= scale; }
 
     // getters and setters
     TextureInfo getTextureInfo() { return texture_info_; }

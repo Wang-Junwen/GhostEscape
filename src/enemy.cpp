@@ -58,14 +58,14 @@ void Enemy::changeState(EnemyState state)
     cur_anim_->setActive(true);
     cur_state_ = state;
 }
-
+ 
 void Enemy::attack()
 {
     if (!collider_ || target_->getCollider() == nullptr)
         return;
     if (collider_->isColliding(*target_->getCollider())){
         // TODO: 造成伤害
-        SDL_Log("attack");
+        // SDL_Log("attack");
     }
 }
 
