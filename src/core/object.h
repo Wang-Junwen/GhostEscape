@@ -10,9 +10,10 @@ class Object
 protected:
     ObjectType type_ = ObjectType::NONE; // 对象类型
     Game &game_ = Game::GetInstance();
-    std::vector<Object *> children_; // 子对象列表
-    bool is_active_ = true; // 对象是否激活
-    bool need_remove_ = false; // 对象是否需要移除
+    std::vector<Object *> object_to_add_; // 待添加的子对象列表
+    std::vector<Object *> children_;      // 子对象列表
+    bool is_active_ = true;               // 对象是否激活
+    bool need_remove_ = false;            // 对象是否需要移除
 
 public:
     Object() = default;
@@ -24,6 +25,7 @@ public:
     virtual void render();
     virtual void clean(); //  需要清理的资源，在clean()函数里做
 
+    void safeAddChild(Object *child) { object_to_add_.push_back(child); } // 安全添加子对象
     virtual void addChild(Object *child) { children_.push_back(child); }
     virtual void removeChild(Object *child) { children_.erase(std::remove(children_.begin(), children_.end(), child), children_.end()); }
 

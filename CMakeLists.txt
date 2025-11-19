@@ -5,16 +5,27 @@ project(GhostEscape VERSION 0.1.0 LANGUAGES C CXX)
 # 设置C++标准
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
-# windows下设置字符编码
-if(MSVC)
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /utf-8")
-endif()
 
-# 设置编译选项
+# 强制 Debug 模式（优先级最高，防止被外部覆盖）
+set(CMAKE_BUILD_TYPE Debug CACHE STRING "Build type" FORCE)
+
+# 编译选项：按编译器区分（核心修改）
 if (MSVC)
-    add_compile_options(/W4)
+    # ========== MSVC（Visual Studio 编译器）配置 ==========
+    add_compile_options(/W4 /utf-8)  # /W4 警告级别，/utf-8 编码
+    # MSVC 调试符号：/Zi（生成程序数据库），关闭优化：/Od
+    add_compile_options(/Zi /Od)
+    # MSVC 链接时生成调试信息（必须加，否则调试器找不到符号）
+    set(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} /DEBUG")
+    # MSVC 的 Debug 编译标志（用 /Zi /Od，替代 -g -O0）
+    set(CMAKE_CXX_FLAGS_DEBUG "/Zi /Od" CACHE STRING "Debug CXX flags" FORCE)
+    set(CMAKE_C_FLAGS_DEBUG "/Zi /Od" CACHE STRING "Debug C flags" FORCE)
 else()
-    add_compile_options(-Wall -Wextra -Wpedantic)
+    # ========== MinGW/GCC/Clang 配置 ==========
+    add_compile_options(-Wall -Wextra -Wpedantic -g -O0)
+    # MinGW 的 Debug 编译标志（保持 -g -O0）
+    set(CMAKE_CXX_FLAGS_DEBUG "-g -O0" CACHE STRING "Debug CXX flags" FORCE)
+    set(CMAKE_C_FLAGS_DEBUG "-g -O0" CACHE STRING "Debug C flags" FORCE)
 endif()
 
 # 设置编译输出目录
@@ -42,6 +53,8 @@ add_executable(${TARGET}
                 src/affiliate/sprite.cpp
                 src/affiliate/sprite_anim.cpp
                 src/affiliate/collider.cpp
+                src/raw/stats.cpp
+                src/word/effect.cpp
                 src/player.cpp
                 src/enemy.cpp
                 src/main.cpp

@@ -2,7 +2,7 @@
 #include "core/scene.h"
 #include "affiliate/sprite_anim.h"
 #include "affiliate/collider.h"
-
+#include "raw/stats.h"
 
 void Player::init()
 {
@@ -13,6 +13,13 @@ void Player::init()
     sprite_move_->setActive(false); // 初始不显示移动动画
 
     collider_ = Collider::addColliderChild(this, sprite_idle_->getSize() / 2.0f);
+    stats_ = Stats::addStatsChild(this);
+
+    death_effect_ = Effect::addEffectChild(
+        nullptr,
+        "assets/effect/1764.png",
+        glm::vec2(0.0f),
+        2.0f);
 }
 
 void Player::update(float dt)
@@ -22,6 +29,8 @@ void Player::update(float dt)
     checkState();
     move(dt);
     syncCamera();
+    checkIsDeath();
+
     Actor::update(dt); // 调用父类更新函数
 }
 
@@ -108,5 +117,18 @@ void Player::changeState(bool is_moving)
         sprite_move_->setActive(false);
         sprite_idle_->setCurFrame(sprite_move_->getCurFrame()); // 同步帧数
         sprite_idle_->setFrameTimer(sprite_move_->getFrameTimer()); // 同步计时器
+    }
+}
+
+void Player::checkIsDeath()
+{
+    if (!stats_->getAlive())
+    {
+        SDL_Log("Player is dead!");
+        game_.getCurrentScene()->safeAddChild(death_effect_);
+        SDL_Log("Player is dead222222222222222!");
+        // setNeedRemove(true);
+        death_effect_->setPosition(this->getPosition());
+        setActive(false);
     }
 }

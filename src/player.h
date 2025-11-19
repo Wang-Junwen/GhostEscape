@@ -3,11 +3,13 @@
 
 #include "core/actor.h"
 #include "affiliate/sprite_anim.h"
+#include "word/effect.h"
 
 class Player : public Actor
 {
     SpriteAnim *sprite_idle_ = nullptr;
     SpriteAnim *sprite_move_ = nullptr;
+    Effect *death_effect_ = nullptr;
     bool is_moving_ = false;
 
 public:
@@ -22,6 +24,7 @@ public:
     void syncCamera();
     void checkState();
     void changeState(bool is_moving);
+    void checkIsDeath();
 
     // getters and setters
     bool isMoving() const { return is_moving_; }

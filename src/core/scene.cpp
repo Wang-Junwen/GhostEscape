@@ -13,13 +13,14 @@ void Scene::update(float dt)
             child->clean();
             SDL_Log("Scene remove world child: [%s]",typeid(*child).name());
             delete child;
+            child = nullptr;
             continue;
         }
         if (child->getActive())
         {
             child->update(dt);
-            ++it;
         }
+        ++it;
     }
     for (auto it = children_screen_.begin(); it != children_screen_.end();)
     {
@@ -30,13 +31,14 @@ void Scene::update(float dt)
             child->clean();
             SDL_Log("Scene remove screen child: [%s]",typeid(*child).name());
             delete child;
+            child = nullptr;
             continue;
         }
         if (child->getActive())
         {
             child->update(dt);
-            ++it;
         }
+        ++it;
     }
 }
 void Scene::handleEvents(SDL_Event &event)

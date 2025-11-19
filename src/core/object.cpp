@@ -2,6 +2,14 @@
 
 void Object::update(float dt)
 {
+    // 添加待添加的子对象
+    for (auto &child_to_add : object_to_add_)
+    {
+        addChild(child_to_add);
+        SDL_Log("Object add child: [%s]", typeid(*child_to_add).name());
+    }
+    object_to_add_.clear();
+
     for (auto it = children_.begin(); it != children_.end();)
     {
         auto child = *it;
@@ -9,8 +17,9 @@ void Object::update(float dt)
         {
             it = children_.erase(it);
             child->clean();
-            SDL_Log("Object remove child: [%s]",typeid(*child).name());
+            SDL_Log("Object remove child: [%s]", typeid(*child).name());
             delete child;
+            child = nullptr;
             continue;
         }
 
@@ -24,7 +33,7 @@ void Object::update(float dt)
 
 void Object::handleEvents(SDL_Event &event)
 {
-    for (auto child : children_)
+    for (auto &child : children_)
     {
         if (child->getActive())
         {

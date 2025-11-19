@@ -1,4 +1,5 @@
 #include "enemy.h"
+#include "raw/stats.h"
 
 void Enemy::init()
 {
@@ -12,20 +13,23 @@ void Enemy::init()
 
     cur_anim_ = anim_idle_;
     collider_ = Collider::addColliderChild(this, anim_idle_->getSize());
+    stats_ = Stats::addStatsChild(this);
 }
 
 void Enemy::update(float dt)
 {
     Actor::update(dt);
-    aimTarget(target_);
-    move(dt);
-    
-    attack();
+    if (target_->getActive())
+    {
+        aimTarget(target_);
+        move(dt);
+        attack();
+    }
 }
 
 void Enemy::aimTarget(Player *player)
 {
-    if (target_ == nullptr)
+    if (player == nullptr)
         return;
     auto direction = player->getPosition() - this->getPosition();
     if (glm::length(direction) != 0.0f)
@@ -58,14 +62,18 @@ void Enemy::changeState(EnemyState state)
     cur_anim_->setActive(true);
     cur_state_ = state;
 }
- 
+
 void Enemy::attack()
 {
-    if (!collider_ || target_->getCollider() == nullptr)
+    if (!collider_ || !target_ || target_->getCollider() == nullptr)
         return;
-    if (collider_->isColliding(*target_->getCollider())){
-        // TODO: 造成伤害
-        // SDL_Log("attack");
+    if (collider_->isColliding(*target_->getCollider()))
+    {
+        if (stats_ && target_->getStats())
+        {
+            target_->takeDamage(stats_->getDamage());
+            // changeState(EnemyState::HURT);
+        }
     }
 }
 

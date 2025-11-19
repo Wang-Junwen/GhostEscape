@@ -1,6 +1,7 @@
 #include "scene_main.h"
 #include "player.h"
 #include "enemy.h"
+#include "word/effect.h"
 
 void SceneMain::init()
 {
@@ -13,11 +14,17 @@ void SceneMain::init()
     addChild(player_);
 
     // 创建敌人
+    auto pos = world_size_ / 2.0f + glm::vec2(200.0f, 0.0f);
     auto enemy = new Enemy();
     enemy->init();
-    enemy->setPosition(world_size_ / 2.0f + glm::vec2(200.0f, 0.0f)); // 敌人初始位置
+    enemy->setPosition(pos); // 敌人初始位置
     enemy->setTarget(player_);
-    addChild(enemy);
+    Effect::addEffectChild(
+        this,
+        "assets/effect/184_3.png",
+        pos,
+        1.0f,
+        enemy);
 }
 
 void SceneMain::update(float dt)
