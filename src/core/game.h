@@ -7,6 +7,7 @@
 #include <SDL3_ttf/SDL_ttf.h>
 #include <glm/glm.hpp>
 #include <string>
+#include <random>
 #include "asset_store.h"
 
 struct TextureInfo;
@@ -25,6 +26,8 @@ class Game
 
     SDL_Window *window_ = nullptr;     // 窗口
     SDL_Renderer *renderer_ = nullptr; // 渲染器
+
+    std::mt19937 gen_ = std::mt19937(std::random_device{}()); // 随机数生成器
 
     Game() {};
     Game(const Game &) = delete;
@@ -49,9 +52,15 @@ public:
     Scene *getCurrentScene() const { return current_scene_; }
     AssetStore *getAssetStore() const { return asset_store_; }
 
+    // 随机数方法
+    float randomFloat(float min, float max) { return std::uniform_real_distribution<float>(min, max)(gen_); }
+    int randomInt(int min, int max) { return std::uniform_int_distribution<int>(min, max)(gen_); }
+    glm::vec2 randomVec2(const glm::vec2 &min, const glm::vec2 &max) { return glm::vec2(randomFloat(min.x, max.x), randomFloat(min.y, max.y)); }
+    glm::ivec2 randomIvec2(const glm::ivec2 &min, const glm::ivec2 &max) { return glm::ivec2(randomInt(min.x, max.x), randomInt(min.y, max.y)); }
+
     // 渲染函数
     void renderTexture(const TextureInfo &texture, glm::vec2 &position, const glm::vec2 &size); // 渲染纹理
-    void renderFillCircle(const glm::vec2& position, const glm::vec2& size, float alpha);                     // 渲染实心圆
+    void renderFillCircle(const glm::vec2 &position, const glm::vec2 &size, float alpha);       // 渲染实心圆
 
     // 工具函数
     void drawGrid(const glm::vec2 &top_left, const glm::vec2 &bottom_right, float grid_width, SDL_FColor fcolor);         // 绘制网格

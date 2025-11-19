@@ -126,8 +126,6 @@ void Player::checkIsDeath()
     {
         SDL_Log("Player is dead!");
         game_.getCurrentScene()->safeAddChild(death_effect_);
-        SDL_Log("Player is dead222222222222222!");
-        // setNeedRemove(true);
         death_effect_->setPosition(this->getPosition());
         setActive(false);
     }

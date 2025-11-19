@@ -34,7 +34,7 @@ void SpriteAnim::update(float dt)
 void SpriteAnim::setTextureInfo(const TextureInfo &texture)
 {
     texture_info_ = texture;
-    total_frames_ = texture.src_rect.w / texture.src_rect.h;
+    total_frames_ = static_cast<int>(texture.src_rect.w / texture.src_rect.h);
     texture_info_.src_rect.w = texture.src_rect.h; // 每帧宽度等于高度
     size_ = glm::vec2(texture_info_.src_rect.w, texture_info_.src_rect.h);
 }

@@ -22,6 +22,8 @@ class Enemy : public Actor
     SpriteAnim *cur_anim_ = nullptr;
 
 public:
+    static Enemy *addEnemyChild(Object *parent, glm::vec2 pos, Player *target);
+
     virtual void init() override;
     virtual void update(float dt) override;
 

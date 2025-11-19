@@ -22,14 +22,13 @@ void Effect::update(float dt)
 
 void Effect::checkFinish()
 {
-    // if (sprite_ && sprite_->getFinish())
-    if (sprite_->getFinish())
+    if (sprite_ && sprite_->getFinish())
     {
         this->setNeedRemove(true);
         if (next_object_)
         {
             game_.getCurrentScene()->safeAddChild(next_object_);
-            // next_object_ = nullptr; // 防止重复添加
+            next_object_ = nullptr; // 防止重复添加
         }
     }
 }

@@ -54,11 +54,12 @@ add_executable(${TARGET}
                 src/affiliate/sprite_anim.cpp
                 src/affiliate/collider.cpp
                 src/raw/stats.cpp
-                src/word/effect.cpp
+                src/world/effect.cpp
                 src/player.cpp
                 src/enemy.cpp
                 src/main.cpp
                 src/scene_main.cpp
+                src/spawner.cpp
                 )
 
 # 链接库

@@ -3,7 +3,7 @@
 
 #include "core/actor.h"
 #include "affiliate/sprite_anim.h"
-#include "word/effect.h"
+#include "world/effect.h"
 
 class Player : public Actor
 {

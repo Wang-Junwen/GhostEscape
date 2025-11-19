@@ -3,11 +3,13 @@
 
 #include "core/scene.h"
 
+class Spawner;
 class Player;
 class SceneMain : public Scene
 {
-    
-    Player *player_ = nullptr;            // 玩家指针
+
+    Player *player_ = nullptr;   // 玩家指针
+    Spawner *spawner_ = nullptr; // 敌机生成器指针
 public:
     SceneMain() = default;
     virtual ~SceneMain() = default;

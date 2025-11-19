@@ -1,6 +1,16 @@
 #include "enemy.h"
 #include "raw/stats.h"
 
+Enemy *Enemy::addEnemyChild(Object *parent, glm::vec2 pos, Player *target)
+{
+    auto enemy = new Enemy();
+    enemy->init();
+    enemy->setPosition(pos);
+    enemy->setTarget(target);
+    if (parent) parent->addChild(enemy);
+    return enemy;
+}
+
 void Enemy::init()
 {
     Actor::init();
@@ -72,7 +82,6 @@ void Enemy::attack()
         if (stats_ && target_->getStats())
         {
             target_->takeDamage(stats_->getDamage());
-            // changeState(EnemyState::HURT);
         }
     }
 }

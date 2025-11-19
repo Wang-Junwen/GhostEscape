@@ -1,7 +1,8 @@
 #include "scene_main.h"
 #include "player.h"
 #include "enemy.h"
-#include "word/effect.h"
+#include "world/effect.h"
+#include "spawner.h"
 
 void SceneMain::init()
 {
@@ -13,18 +14,10 @@ void SceneMain::init()
     player_->setPosition(world_size_ / 2.0f); // 玩家初始位置在世界中心
     addChild(player_);
 
-    // 创建敌人
-    auto pos = world_size_ / 2.0f + glm::vec2(200.0f, 0.0f);
-    auto enemy = new Enemy();
-    enemy->init();
-    enemy->setPosition(pos); // 敌人初始位置
-    enemy->setTarget(player_);
-    Effect::addEffectChild(
-        this,
-        "assets/effect/184_3.png",
-        pos,
-        1.0f,
-        enemy);
+    spawner_ = new Spawner();
+    spawner_->init();
+    spawner_->setPlayer(player_);
+    addChild(spawner_);
 }
 
 void SceneMain::update(float dt)

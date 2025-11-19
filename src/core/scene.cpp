@@ -11,7 +11,6 @@ void Scene::update(float dt)
         {
             it = children_world_.erase(it);
             child->clean();
-            SDL_Log("Scene remove world child: [%s]",typeid(*child).name());
             delete child;
             child = nullptr;
             continue;
@@ -29,7 +28,6 @@ void Scene::update(float dt)
         {
             it = children_screen_.erase(it);
             child->clean();
-            SDL_Log("Scene remove screen child: [%s]",typeid(*child).name());
             delete child;
             child = nullptr;
             continue;

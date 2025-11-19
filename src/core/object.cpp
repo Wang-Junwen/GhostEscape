@@ -6,7 +6,6 @@ void Object::update(float dt)
     for (auto &child_to_add : object_to_add_)
     {
         addChild(child_to_add);
-        SDL_Log("Object add child: [%s]", typeid(*child_to_add).name());
     }
     object_to_add_.clear();
 
@@ -17,7 +16,6 @@ void Object::update(float dt)
         {
             it = children_.erase(it);
             child->clean();
-            SDL_Log("Object remove child: [%s]", typeid(*child).name());
             delete child;
             child = nullptr;
             continue;
