@@ -5,11 +5,13 @@
 
 class Spawner;
 class Player;
+class UIMouse;
 class SceneMain : public Scene
 {
 
     Player *player_ = nullptr;   // 玩家指针
     Spawner *spawner_ = nullptr; // 敌机生成器指针
+    UIMouse *ui_mouse_ = nullptr; // 鼠标指针
 public:
     SceneMain() = default;
     virtual ~SceneMain() = default;

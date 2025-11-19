@@ -3,10 +3,12 @@
 #include "enemy.h"
 #include "world/effect.h"
 #include "spawner.h"
+#include "screen/ui_mouse.h"
 
 void SceneMain::init()
 {
-    world_size_ = game_.getScreenSize() * 3.0f; // 世界尺寸为屏幕尺寸的三倍
+    SDL_HideCursor();
+    world_size_ = game_.getScreenSize() * 3.0f;                      // 世界尺寸为屏幕尺寸的三倍
     camera_pos_ = world_size_ / 2.0f - game_.getScreenSize() / 2.0f; // 相机位置
 
     player_ = new Player();
@@ -18,6 +20,8 @@ void SceneMain::init()
     spawner_->init();
     spawner_->setPlayer(player_);
     addChild(spawner_);
+
+    ui_mouse_ = UIMouse::addUIMouseChild(this, "assets/UI/29.png", "assets/UI/30.png");
 }
 
 void SceneMain::update(float dt)
@@ -44,8 +48,8 @@ void SceneMain::clean()
 void SceneMain::renderBackground()
 {
     // 绘制背景网格
-    auto start = - camera_pos_; // 起始位置
-    auto end = world_size_ - camera_pos_; // 结束位置 
+    auto start = -camera_pos_;            // 起始位置
+    auto end = world_size_ - camera_pos_; // 结束位置
     game_.drawGrid(
         start,
         end,

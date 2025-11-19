@@ -15,10 +15,12 @@ class Scene; // 前向声明，而不是引入scene.h头文件，防止循环引
 // 单例模式
 class Game
 {
-    AssetStore *asset_store_ = nullptr; // 资源管理器
-    glm::vec2 screen_size_;             // 屏幕尺寸
-    bool is_running_ = true;            // 游戏是否运行
-    Scene *current_scene_ = nullptr;    // 当前场景
+    AssetStore *asset_store_ = nullptr;     // 资源管理器
+    glm::vec2 screen_size_ = glm::vec2(0);  // 屏幕尺寸
+    glm::vec2 mouse_pos_ = glm::vec2(0);    // 鼠标位置
+    SDL_MouseButtonFlags mouse_button_ = 0; // 鼠标按键状态
+    bool is_running_ = true;                // 游戏是否运行
+    Scene *current_scene_ = nullptr;        // 当前场景
 
     Uint64 FPS_ = 60;        // 帧率
     Uint64 frame_delay_ = 0; // 帧延迟, 单位ns, init中计算
@@ -51,6 +53,10 @@ public:
     glm::vec2 getScreenSize() const { return screen_size_; }
     Scene *getCurrentScene() const { return current_scene_; }
     AssetStore *getAssetStore() const { return asset_store_; }
+    glm::vec2 getMousePos() const { return mouse_pos_; }
+    void setMousePos(glm::vec2 pos) { mouse_pos_ = pos; }
+    SDL_MouseButtonFlags getMouseButton() const { return mouse_button_; }
+    void setMouseButton(SDL_MouseButtonFlags button) { mouse_button_ = button; }
 
     // 随机数方法
     float randomFloat(float min, float max) { return std::uniform_real_distribution<float>(min, max)(gen_); }
