@@ -54,6 +54,7 @@ add_executable(${TARGET}
                 src/affiliate/sprite_anim.cpp
                 src/affiliate/collider.cpp
                 src/raw/stats.cpp
+                src/raw/weapon.cpp
                 src/world/effect.cpp
                 src/world/spell.cpp
                 src/screen/ui_mouse.cpp
@@ -62,6 +63,7 @@ add_executable(${TARGET}
                 src/main.cpp
                 src/scene_main.cpp
                 src/spawner.cpp
+                src/weapon_thunder.cpp
                 )
 
 # 链接库

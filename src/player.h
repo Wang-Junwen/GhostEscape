@@ -4,9 +4,11 @@
 #include "core/actor.h"
 #include "affiliate/sprite_anim.h"
 #include "world/effect.h"
+#include "weapon_thunder.h"
 
 class Player : public Actor
 {
+    WeaponThunder *weapon_thunder_ = nullptr;
     SpriteAnim *sprite_idle_ = nullptr;
     SpriteAnim *sprite_move_ = nullptr;
     Effect *death_effect_ = nullptr;
