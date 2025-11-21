@@ -8,11 +8,14 @@ void Player::init()
 {
     Actor::init(); // 调用父类初始化函数
     max_speed_ = 500.0f;
-    sprite_idle_ = SpriteAnim::addSpriteAnimChild(this, "assets/sprite/ghost-idle.png", 2.0f);
-    sprite_move_ = SpriteAnim::addSpriteAnimChild(this, "assets/sprite/ghost-move.png", 2.0f);
+    sprite_idle_ = SpriteAnim::addSpriteAnimChild(this, "assets/sprite/samuri/IDLE-sheet.png", 2.0f);
+    sprite_move_ = SpriteAnim::addSpriteAnimChild(this, "assets/sprite/samuri/RUN-sheet.png", 2.0f);
+    sprite_hurt_ = SpriteAnim::addSpriteAnimChild(this, "assets/sprite/samuri/HURT-sheet.png", 2.0f);
     sprite_move_->setActive(false); // 初始不显示移动动画
+    sprite_hurt_->setActive(false); // 初始不显示受伤动画
+    cur_sprite_ = sprite_idle_;
 
-    collider_ = Collider::addColliderChild(this, sprite_idle_->getSize() / 2.0f);
+    collider_ = Collider::addColliderChild(this, sprite_idle_->getSize(), ColliderType::RECTANGLE, Anchor::CENTER);
     stats_ = Stats::addStatsChild(this);
 
     death_effect_ = Effect::addEffectChild(
@@ -83,42 +86,38 @@ void Player::syncCamera()
 
 void Player::checkState()
 {
-    if (velocity_.x < 0)
+    PlayerState new_state;
+    if (stats_->getInvincible())
     {
-        sprite_idle_->setFlip(true);
-        sprite_move_->setFlip(true);
-    }
-    else
+        new_state = PlayerState::HURT;
+    }else if (glm::length(velocity_) > 1.0f)
     {
-        sprite_idle_->setFlip(false);
-        sprite_move_->setFlip(false);
+        new_state = PlayerState::MOVE;
+    }else {
+        new_state = PlayerState::IDLE;
     }
-
-    bool moving = (glm::length(velocity_) > 0.1f);
-    if (moving != is_moving_)
-    {
-        is_moving_ = moving;
-        changeState(moving); // 状态改变
-    }
-    
+    if (new_state != cur_state_) changeState(new_state);
+    cur_sprite_->setFlip(velocity_.x < 0);
 }
 
-void Player::changeState(bool is_moving)
+void Player::changeState(PlayerState state)
 {
-    if (is_moving)
+    cur_sprite_->setActive(false);
+
+    switch (state)
     {
-        sprite_idle_->setActive(false);
-        sprite_move_->setActive(true);
-        sprite_move_->setCurFrame(sprite_idle_->getCurFrame()); // 同步帧数
-        sprite_move_->setFrameTimer(sprite_idle_->getFrameTimer()); // 同步计时器
+    case PlayerState::IDLE:
+        cur_sprite_ = sprite_idle_;
+        break;
+    case PlayerState::MOVE:
+        cur_sprite_ = sprite_move_;
+        break;
+    case PlayerState::HURT:
+        cur_sprite_ = sprite_hurt_;
+        break;
     }
-    else
-    {
-        sprite_idle_->setActive(true);
-        sprite_move_->setActive(false);
-        sprite_idle_->setCurFrame(sprite_move_->getCurFrame()); // 同步帧数
-        sprite_idle_->setFrameTimer(sprite_move_->getFrameTimer()); // 同步计时器
-    }
+    cur_sprite_->setActive(true);
+    cur_state_ = state;
 }
 
 void Player::checkIsDeath()

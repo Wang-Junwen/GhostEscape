@@ -62,6 +62,12 @@ void Game::init(std::string title, int width, int height)
     {
         SDL_LogError(SDL_LOG_CATEGORY_ERROR, "SDL窗口或渲染器创建失败: %s\n", SDL_GetError());
     }
+    // 设置渲染器混合模式
+    if (!SDL_SetRenderDrawBlendMode(renderer_, SDL_BLENDMODE_BLEND))
+    {
+        // 可选：打印错误信息
+        SDL_LogError(SDL_LOG_CATEGORY_RENDER, "无法设置渲染器混合模式: %s\n", SDL_GetError());
+    }
     // 设置窗口逻辑分辨率
     SDL_SetRenderLogicalPresentation(renderer_, width, height, SDL_LOGICAL_PRESENTATION_LETTERBOX);
 
@@ -151,6 +157,14 @@ void Game::renderFillCircle(const glm::vec2 &position, const glm::vec2 &size, fl
     SDL_FRect dstRect = {position.x, position.y, size.x, size.y};
     SDL_SetTextureAlphaModFloat(texture, alpha);
     SDL_RenderTexture(renderer_, texture, nullptr, &dstRect);
+}
+
+void Game::renderFillRect(const glm::vec2 &position, const glm::vec2 &size, float alpha)
+{
+    SDL_FRect dstRect = {position.x, position.y, size.x, size.y};
+    SDL_SetRenderDrawColorFloat(renderer_, 0.0f, 1.0f, 0, alpha);
+    SDL_RenderFillRect(renderer_, &dstRect);
+    SDL_SetRenderDrawColorFloat(renderer_, 0, 0, 0, 1.0f); // 恢复默认颜色
 }
 
 void Game::drawGrid(const glm::vec2 &top_left, const glm::vec2 &bottom_right, float grid_width, SDL_FColor fcolor)
