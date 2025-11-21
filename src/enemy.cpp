@@ -24,23 +24,27 @@ void Enemy::init()
     cur_anim_ = anim_idle_;
     collider_ = Collider::addColliderChild(this, anim_idle_->getSize());
     stats_ = Stats::addStatsChild(this);
+    setType(ObjectType::ENEMY);
 }
 
 void Enemy::update(float dt)
 {
     Actor::update(dt);
-    if (target_->getActive())
+    if (target_->getActive() && cur_state_ != EnemyState::DIE)
     {
         aimTarget(target_);
         move(dt);
         attack();
     }
+    checkState();
+    remove();
 }
 
 void Enemy::aimTarget(Player *player)
 {
     if (player == nullptr)
         return;
+    
     auto direction = player->getPosition() - this->getPosition();
     if (glm::length(direction) != 0.0f)
         direction = glm::normalize(direction);
@@ -49,6 +53,13 @@ void Enemy::aimTarget(Player *player)
 
 void Enemy::checkState()
 {
+    EnemyState new_state;
+    if (stats_->getHealth() <= 0) new_state = EnemyState::DIE;
+    else if (stats_->getInvincible()) new_state = EnemyState::HURT;
+    else new_state = EnemyState::IDLE;
+
+    if (new_state != cur_state_) changeState(new_state);
+
 }
 
 void Enemy::changeState(EnemyState state)

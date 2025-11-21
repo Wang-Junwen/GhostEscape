@@ -55,6 +55,7 @@ add_executable(${TARGET}
                 src/affiliate/collider.cpp
                 src/raw/stats.cpp
                 src/world/effect.cpp
+                src/world/spell.cpp
                 src/screen/ui_mouse.cpp
                 src/player.cpp
                 src/enemy.cpp

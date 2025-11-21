@@ -14,7 +14,7 @@ protected:
 
 public:
     void move(float dt);
-    void takeDamage(float damage);
+    virtual void takeDamage(float damage);
 
     // getters and setters
     glm::vec2 getVelocity() const { return velocity_; }

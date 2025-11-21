@@ -35,6 +35,8 @@ public:
     void setCameraPos(const glm::vec2 &pos);
     glm::vec2 getWorldSize() const { return world_size_; }
     void setWorldSize(const glm::vec2 &size) { world_size_ = size; }
+    std::vector<ObjectWorld *> &getChildrenWorld()  { return children_world_; }
+    std::vector<ObjectScreen *> &getChildrenScreen()  { return children_screen_; }
 };
 
 #endif // SCENE_H

@@ -4,6 +4,7 @@
 #include "world/effect.h"
 #include "spawner.h"
 #include "screen/ui_mouse.h"
+#include "world/spell.h"
 
 void SceneMain::init()
 {
@@ -32,6 +33,14 @@ void SceneMain::update(float dt)
 void SceneMain::handleEvents(SDL_Event &event)
 {
     Scene::handleEvents(event);
+    if (event.type == SDL_EVENT_MOUSE_BUTTON_UP)
+    {
+        if (event.button.button == SDL_BUTTON_LEFT)
+        {
+            auto pos = game_.getMousePos() + camera_pos_;
+            Spell::addSpellChild(this, "assets/effect/Thunderstrike w blur.png", pos, 60.0f, 3.0f);
+        }
+    }
 }
 
 void SceneMain::render()

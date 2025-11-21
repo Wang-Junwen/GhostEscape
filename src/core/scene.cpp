@@ -93,6 +93,7 @@ void Scene::addChild(Object *child)
     switch (child->getType())
     {
     case ObjectType::OBJECT_WORLD:
+    case ObjectType::ENEMY:
         children_world_.push_back(dynamic_cast<ObjectWorld *>(child));
         break;
     case ObjectType::OBJECT_SCREEN:
@@ -109,6 +110,7 @@ void Scene::removeChild(Object *child)
     switch (child->getType())
     {
     case ObjectType::OBJECT_WORLD:
+    case ObjectType::ENEMY:
         children_world_.erase(std::remove(children_world_.begin(), children_world_.end(), dynamic_cast<ObjectWorld *>(child)), children_world_.end());
         break;
     case ObjectType::OBJECT_SCREEN:

@@ -7,7 +7,7 @@ class Player;
 class Spawner : public Object
 {
 protected:
-    int num_ = 20;
+    int num_ = 2;
     float timer_ = 0;
     float interval_ = 3.0f;
     Player* player_ = nullptr;

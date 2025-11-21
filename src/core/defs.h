@@ -8,6 +8,7 @@ enum class ObjectType
     NONE,
     OBJECT_SCREEN,
     OBJECT_WORLD,
+    ENEMY,
 };
 
 enum class ColliderType
