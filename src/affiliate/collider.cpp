@@ -4,7 +4,7 @@ void Collider::render()
 {
 #ifdef DEBUG_MODE
     ObjectAffiliate::render();
-    auto pos = parent_->getRenderPosition() + offset_;
+    auto pos = getRenderPosition();
     switch (collider_type_)
     {
     case ColliderType::CIRCLE:

@@ -10,18 +10,19 @@ Spell *Spell::addSpellChild(Object *parent, const std::string &file_path, glm::v
     spell->sprite_->setLoop(false);
     spell->setPosition(pos);
     spell->damage_ = damage;
-    if (parent) parent->addChild(spell);
+    if (parent)
+        parent->addChild(spell);
     return spell;
 }
 
 void Spell::update(float dt)
 {
     ObjectWorld::update(dt);
-    if(sprite_->getFinish()) 
+    if (sprite_->getFinish())
     {
         need_remove_ = true;
-        attack();
     }
+    attack();
 }
 
 void Spell::attack()
@@ -29,7 +30,8 @@ void Spell::attack()
     auto objects = game_.getCurrentScene()->getChildrenWorld();
     for (auto &obj : objects)
     {
-        if (obj->getType() != ObjectType::ENEMY) continue;
+        if (obj->getType() != ObjectType::ENEMY)
+            continue;
         if (collider_ && obj->getCollider() && collider_->isColliding(*obj->getCollider()))
         {
             obj->takeDamage(damage_);

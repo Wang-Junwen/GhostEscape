@@ -15,7 +15,7 @@ void Player::init()
     sprite_hurt_->setActive(false); // 初始不显示受伤动画
     cur_sprite_ = sprite_idle_;
 
-    collider_ = Collider::addColliderChild(this, sprite_idle_->getSize(), ColliderType::RECTANGLE, Anchor::CENTER);
+    collider_ = Collider::addColliderChild(this, sprite_idle_->getSize() * 0.8f, ColliderType::RECTANGLE, Anchor::CENTER);
     stats_ = Stats::addStatsChild(this);
 
     death_effect_ = Effect::addEffectChild(

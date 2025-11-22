@@ -167,6 +167,23 @@ void Game::renderFillRect(const glm::vec2 &position, const glm::vec2 &size, floa
     SDL_SetRenderDrawColorFloat(renderer_, 0, 0, 0, 1.0f); // 恢复默认颜色
 }
 
+void Game::renderHBar(const glm::vec2 &position, const glm::vec2 &size, float percent, SDL_FColor color)
+{
+    // 设置颜色
+    SDL_SetRenderDrawColorFloat(renderer_, color.r, color.g, color.b, color.a);
+    // 绘制进度条外框
+    SDL_FRect boundary_rect = {position.x, position.y, size.x, size.y};
+    SDL_RenderRect(renderer_, &boundary_rect);
+
+    // 计算进度条长度
+    float bar_length = size.x * percent;
+    // 绘制进度条
+    SDL_FRect rect = {position.x, position.y, bar_length, size.y};
+    SDL_RenderFillRect(renderer_, &rect);
+    // 恢复默认颜色
+    SDL_SetRenderDrawColorFloat(renderer_, 0, 0, 0, 1.0f);
+}
+
 void Game::drawGrid(const glm::vec2 &top_left, const glm::vec2 &bottom_right, float grid_width, SDL_FColor fcolor)
 {
     SDL_SetRenderDrawColorFloat(renderer_, fcolor.r, fcolor.g, fcolor.b, fcolor.a);

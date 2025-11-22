@@ -1,5 +1,6 @@
 #include "enemy.h"
 #include "raw/stats.h"
+#include "affiliate/affiliate_bar.h"
 
 Enemy *Enemy::addEnemyChild(Object *parent, glm::vec2 pos, Player *target)
 {
@@ -24,6 +25,9 @@ void Enemy::init()
     cur_anim_ = anim_idle_;
     collider_ = Collider::addColliderChild(this, anim_idle_->getSize() * 0.8f);
     stats_ = Stats::addStatsChild(this);
+    auto size = anim_idle_->getSize();
+    health_bar_ = AffiliateBar::addAffiliateBarChild(this, glm::vec2(size.x * 0.8, 10), Anchor::BOTTOM_CENTER);
+    health_bar_->setOffset(health_bar_->getOffset() + glm::vec2(0, size.y/2.0f));
     setType(ObjectType::ENEMY);
 }
 
