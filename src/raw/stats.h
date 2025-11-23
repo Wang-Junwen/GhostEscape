@@ -51,6 +51,9 @@ public:
     void setInvincibleTimer(float timer) { invincible_timer_ = timer; }
     bool getInvincible() const { return is_invincible_; }
     void setInvincible(bool is_invincible) { is_invincible_ = is_invincible; }
+
+    float getHealthPercent() const { return health_ / max_health_; }
+    float getManaPercent() const { return mana_ / max_mana_; }
 };
 
 #endif // STATS_H

@@ -5,6 +5,7 @@
 #include "spawner.h"
 #include "screen/ui_mouse.h"
 #include "world/spell.h"
+#include "screen/hud_stats.h"
 
 void SceneMain::init()
 {
@@ -23,6 +24,7 @@ void SceneMain::init()
     addChild(spawner_);
 
     ui_mouse_ = UIMouse::addUIMouseChild(this, "assets/UI/29.png", "assets/UI/30.png");
+    hud_stats_ = HUDStats::addHUDStatsChild(this, player_, glm::vec2(30.0f));
 }
 
 void SceneMain::update(float dt)

@@ -22,7 +22,7 @@ void Sprite::render()
 {
     if (!texture_info_.texture || !parent_ || is_finish_) return;
     // 计算渲染位置，相对父节点偏移
-    Game::GetInstance().renderTexture(texture_info_, getRenderPosition(), size_); 
+    Game::GetInstance().renderTexture(texture_info_, getRenderPosition(), size_, percentage_); 
 }
 
 void Sprite::setTextureInfo(const TextureInfo &texture)

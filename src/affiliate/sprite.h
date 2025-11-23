@@ -18,6 +18,7 @@ class Sprite : public ObjectAffiliate
 protected:
     TextureInfo texture_info_; // 纹理对象
     bool is_finish_ = false;    // 纹理是否加载完成
+    glm::vec2 percentage_ = glm::vec2(1.0f);   // 纹理原始区域百分比
     
 public:
     static Sprite *addSpriteChild(ObjectScreen *parent, const std::string &file_path, float scale = 1.0f, Anchor anchor = Anchor::CENTER);
@@ -33,5 +34,8 @@ public:
     float getAngle() { return texture_info_.angle; }
     void setFinish(bool finish) { is_finish_ = finish; }
     bool getFinish() { return is_finish_; }
+    glm::vec2 getPercentage() { return percentage_; }
+    void setPercentage(glm::vec2 percentage) { percentage_ = percentage; }
+    
 };
 #endif // SPRITE_H

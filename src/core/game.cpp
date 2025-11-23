@@ -145,10 +145,19 @@ void Game::clean()
     SDL_Quit();
 }
 
-void Game::renderTexture(const TextureInfo &texture_info, glm::vec2 &position, const glm::vec2 &size)
+void Game::renderTexture(const TextureInfo &texture_info, glm::vec2 &position, const glm::vec2 &size, const glm::vec2 &mask)
 {
-    SDL_FRect dstRect = {position.x, position.y, size.x, size.y};
-    SDL_RenderTextureRotated(renderer_, texture_info.texture, &texture_info.src_rect, &dstRect, texture_info.angle, nullptr, texture_info.is_flip ? SDL_FLIP_HORIZONTAL : SDL_FLIP_NONE);
+    SDL_FRect srcRect = {
+        texture_info.src_rect.x,
+        texture_info.src_rect.y,
+        texture_info.src_rect.w * mask.x,
+        texture_info.src_rect.h * mask.y};
+    SDL_FRect dstRect = {
+        position.x,
+        position.y,
+        size.x * mask.x,
+        size.y * mask.y};
+    SDL_RenderTextureRotated(renderer_, texture_info.texture, &srcRect, &dstRect, texture_info.angle, nullptr, texture_info.is_flip ? SDL_FLIP_HORIZONTAL : SDL_FLIP_NONE);
 }
 
 void Game::renderFillCircle(const glm::vec2 &position, const glm::vec2 &size, float alpha)
