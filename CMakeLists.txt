@@ -62,6 +62,7 @@ add_executable(${TARGET}
                 src/screen/ui_mouse.cpp
                 src/screen/hud_stats.cpp
                 src/screen/hud_skill.cpp
+                src/screen/hud_text.cpp
                 src/player.cpp
                 src/enemy.cpp
                 src/main.cpp

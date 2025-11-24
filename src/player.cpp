@@ -26,8 +26,6 @@ void Player::init()
         glm::vec2(0.0f),
         2.0f);
     weapon_thunder_ = WeaponThunder::addWeaponThunderChild(this, 2.0f, 40.0f);
-
-    TextLabel::addTextLabelChild(this, "这是 主角Player", "assets/font/VonwaonBitmap-16px.ttf", 16);
 }
 
 void Player::update(float dt)

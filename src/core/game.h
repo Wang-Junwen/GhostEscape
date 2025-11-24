@@ -26,6 +26,9 @@ class Game
     Uint64 frame_delay_ = 0; // 帧延迟, 单位ns, init中计算
     float dt_ = 0.0f;        // 每帧时间间隔, 单位s
 
+    int score_ = 0;      // 游戏得分
+    int high_score_ = 0; // 最高得分
+
     SDL_Window *window_ = nullptr;         // 窗口
     SDL_Renderer *renderer_ = nullptr;     // 渲染器
     TTF_TextEngine *ttf_engine_ = nullptr; // 字体引擎
@@ -58,6 +61,12 @@ public:
     void setMousePos(glm::vec2 pos) { mouse_pos_ = pos; }
     SDL_MouseButtonFlags getMouseButton() const { return mouse_button_; }
     void setMouseButton(SDL_MouseButtonFlags button) { mouse_button_ = button; }
+    void setScore(int score);
+    void setHighScore(int high_score) { high_score_ = high_score; }
+    int getScore() const { return score_; }
+    int getHighScore() const { return high_score_; }
+
+    void addScore(int score);
 
     // 随机数方法
     float randomFloat(float min, float max) { return std::uniform_real_distribution<float>(min, max)(gen_); }
@@ -72,7 +81,7 @@ public:
     void renderHBar(const glm::vec2 &position, const glm::vec2 &size, float percent, SDL_FColor color);                                        // 渲染水平进度条
 
     // 文字函数
-    TTF_Text* createTTFText(const std::string &text, const std::string &font_path, int font_size = 16); // 创建TTF文本
+    TTF_Text *createTTFText(const std::string &text, const std::string &font_path, int font_size = 16); // 创建TTF文本
 
     // 工具函数
     void drawGrid(const glm::vec2 &top_left, const glm::vec2 &bottom_right, float grid_width, SDL_FColor fcolor);         // 绘制网格

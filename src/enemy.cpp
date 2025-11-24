@@ -15,9 +15,9 @@ Enemy *Enemy::addEnemyChild(Object *parent, glm::vec2 pos, Player *target)
 void Enemy::init()
 {
     Actor::init();
-    anim_idle_ = SpriteAnim::addSpriteAnimChild(this, "assets/sprite/knight/WALK-sheet.png", 1.6f);
-    anim_hurt_ = SpriteAnim::addSpriteAnimChild(this, "assets/sprite/knight/HURT-sheet.png", 1.6f);
-    anim_die_ = SpriteAnim::addSpriteAnimChild(this, "assets/sprite/knight/DEATH-sheet.png", 1.6f);
+    anim_idle_ = SpriteAnim::addSpriteAnimChild(this, "assets/sprite/knight/WALK-sheet.png", 1.8f);
+    anim_hurt_ = SpriteAnim::addSpriteAnimChild(this, "assets/sprite/knight/HURT-sheet.png", 1.8f);
+    anim_die_ = SpriteAnim::addSpriteAnimChild(this, "assets/sprite/knight/DEATH-sheet.png", 1.8f);
     anim_hurt_->setActive(false);
     anim_die_->setActive(false);
     anim_die_->setLoop(false);
@@ -83,6 +83,7 @@ void Enemy::changeState(EnemyState state)
         break;
     case EnemyState::DIE:
         cur_anim_ = anim_die_;
+        game_.addScore(getScore());
         break;
     }
     cur_anim_->setActive(true);

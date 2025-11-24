@@ -153,6 +153,18 @@ void Game::clean()
     SDL_Quit();
 }
 
+void Game::setScore(int score)
+{
+    score_ = score;
+    if (score > high_score_)
+        high_score_ = score; // 更新最高分
+}
+
+void Game::addScore(int score)
+{
+    setScore(score_ + score);
+}
+
 void Game::renderTexture(const TextureInfo &texture_info, const glm::vec2 &position, const glm::vec2 &size, const glm::vec2 &mask)
 {
     SDL_FRect srcRect = {

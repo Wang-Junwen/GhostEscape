@@ -21,6 +21,8 @@ class Enemy : public Actor
 
     SpriteAnim *cur_anim_ = nullptr;
 
+    int score_ = 10;
+
 public:
     static Enemy *addEnemyChild(Object *parent, glm::vec2 pos, Player *target);
 
@@ -37,6 +39,8 @@ public:
     // getters and setters
     Player *getTarget() const { return target_; }
     void setTarget(Player *target) { target_ = target; }
+    int getScore() const { return score_; }
+    void setScore(int score) { score_ = score; }
 };
 
 #endif // ENEMY_H
