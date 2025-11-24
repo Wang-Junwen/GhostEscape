@@ -16,7 +16,7 @@ public:
     void setOffsetFromAnchor(Anchor anchor);
     void setScale(float scale);
 
-    glm::vec2 getRenderPosition() const {return parent_->getRenderPosition() + offset_;};
+    glm::vec2 getRenderPosition() const { return parent_->getRenderPosition() + offset_; };
 
     // getters and setters
     ObjectScreen *getParent() const { return parent_; }

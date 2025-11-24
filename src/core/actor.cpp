@@ -11,7 +11,7 @@ void Actor::update(float dt)
 
 void Actor::move(float dt)
 {
-    auto pos_ = glm::clamp(position_ + velocity_ * dt, glm::vec2(0.0f), game_.getCurrentScene()->getWorldSize()); // 边界检测
+    auto pos_ = glm::clamp(position_ + velocity_ * dt, glm::vec2(0.0f) + 20.0f, game_.getCurrentScene()->getWorldSize() - 20.0f); // 边界检测
     setPosition(pos_);
 }
 

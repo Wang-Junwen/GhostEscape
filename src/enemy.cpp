@@ -15,18 +15,18 @@ Enemy *Enemy::addEnemyChild(Object *parent, glm::vec2 pos, Player *target)
 void Enemy::init()
 {
     Actor::init();
-    anim_idle_ = SpriteAnim::addSpriteAnimChild(this, "assets/sprite/knight/WALK-sheet.png", 2.0f);
-    anim_hurt_ = SpriteAnim::addSpriteAnimChild(this, "assets/sprite/knight/HURT-sheet.png", 2.0f);
-    anim_die_ = SpriteAnim::addSpriteAnimChild(this, "assets/sprite/knight/DEATH-sheet.png", 2.0f);
+    anim_idle_ = SpriteAnim::addSpriteAnimChild(this, "assets/sprite/knight/WALK-sheet.png", 1.6f);
+    anim_hurt_ = SpriteAnim::addSpriteAnimChild(this, "assets/sprite/knight/HURT-sheet.png", 1.6f);
+    anim_die_ = SpriteAnim::addSpriteAnimChild(this, "assets/sprite/knight/DEATH-sheet.png", 1.6f);
     anim_hurt_->setActive(false);
     anim_die_->setActive(false);
     anim_die_->setLoop(false);
 
     cur_anim_ = anim_idle_;
-    collider_ = Collider::addColliderChild(this, anim_idle_->getSize() * 0.8f);
+    collider_ = Collider::addColliderChild(this, anim_idle_->getSize() * 0.6f);
     stats_ = Stats::addStatsChild(this);
     auto size = anim_idle_->getSize();
-    health_bar_ = AffiliateBar::addAffiliateBarChild(this, glm::vec2(size.x * 0.8, 10), Anchor::BOTTOM_CENTER);
+    health_bar_ = AffiliateBar::addAffiliateBarChild(this, glm::vec2(size.x * 0.7, 8), Anchor::BOTTOM_CENTER);
     health_bar_->setOffset(health_bar_->getOffset() + glm::vec2(0, size.y/2.0f));
     setType(ObjectType::ENEMY);
 }

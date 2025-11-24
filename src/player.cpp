@@ -3,6 +3,7 @@
 #include "affiliate/sprite_anim.h"
 #include "affiliate/collider.h"
 #include "raw/stats.h"
+#include "affiliate/text_label.h"
 
 void Player::init()
 {
@@ -15,7 +16,8 @@ void Player::init()
     sprite_hurt_->setActive(false); // 初始不显示受伤动画
     cur_sprite_ = sprite_idle_;
 
-    collider_ = Collider::addColliderChild(this, sprite_idle_->getSize() * 0.8f, ColliderType::RECTANGLE, Anchor::CENTER);
+    auto col_size = glm::vec2(sprite_idle_->getSize().x * 0.5f, sprite_idle_->getSize().y * 0.8f);
+    collider_ = Collider::addColliderChild(this, col_size, ColliderType::RECTANGLE, Anchor::CENTER);
     stats_ = Stats::addStatsChild(this);
 
     death_effect_ = Effect::addEffectChild(
@@ -24,6 +26,8 @@ void Player::init()
         glm::vec2(0.0f),
         2.0f);
     weapon_thunder_ = WeaponThunder::addWeaponThunderChild(this, 2.0f, 40.0f);
+
+    TextLabel::addTextLabelChild(this, "这是 主角Player", "assets/font/VonwaonBitmap-16px.ttf", 16);
 }
 
 void Player::update(float dt)
@@ -90,13 +94,17 @@ void Player::checkState()
     if (stats_->getInvincible())
     {
         new_state = PlayerState::HURT;
-    }else if (glm::length(velocity_) > 1.0f)
+    }
+    else if (glm::length(velocity_) > 20.0f)
     {
         new_state = PlayerState::MOVE;
-    }else {
+    }
+    else
+    {
         new_state = PlayerState::IDLE;
     }
-    if (new_state != cur_state_) changeState(new_state);
+    if (new_state != cur_state_)
+        changeState(new_state);
     cur_sprite_->setFlip(velocity_.x < 0);
 }
 
