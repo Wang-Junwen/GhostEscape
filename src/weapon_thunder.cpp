@@ -16,6 +16,21 @@ WeaponThunder *WeaponThunder::addWeaponThunderChild(Actor *parent, float cool_do
     return weapon;
 }
 
+void WeaponThunder::init()
+{
+    Weapon::init();
+    auto scene = game_.getCurrentScene();
+    auto pos = glm::vec2(game_.getScreenSize().x - 300, 30);
+    hud_skill_ = HUDSkill::addHUDSkillChild(scene, "assets/UI/Electric-Icon.png", pos, 0.14f, Anchor::CENTER);
+}
+
+void WeaponThunder::update(float dt)
+{
+    Weapon::update(dt);
+    if (hud_skill_)
+        hud_skill_->setPercentage(getCoolDownTimer() / getCoolDown());
+}
+
 void WeaponThunder::handleEvents(SDL_Event &event)
 {
     if (event.type == SDL_EVENT_MOUSE_BUTTON_UP)

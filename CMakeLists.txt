@@ -60,6 +60,7 @@ add_executable(${TARGET}
                 src/world/spell.cpp
                 src/screen/ui_mouse.cpp
                 src/screen/hud_stats.cpp
+                src/screen/hud_skill.cpp
                 src/player.cpp
                 src/enemy.cpp
                 src/main.cpp

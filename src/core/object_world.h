@@ -13,7 +13,7 @@ protected:
 public:
     virtual void init() override {type_ = ObjectType::OBJECT_WORLD;};
     virtual void update(float dt) override;
-    virtual void takeDamage(float damage) {};
+    virtual void takeDamage(float) {};
     // getters and setters
     glm::vec2 getPosition() const { return position_; }
     void setPosition(const glm::vec2 &pos);
