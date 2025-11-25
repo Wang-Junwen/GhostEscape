@@ -68,6 +68,21 @@ public:
 
     void addScore(int score);
 
+    // 音频函数
+    void playMusic(const std::string &music_path, bool loops = true) { Mix_PlayMusic(asset_store_->getMusic(music_path), loops ? -1 : 0); } // 播放音乐
+    void playSound(const std::string &sound_path) { Mix_PlayChannel(-1, asset_store_->getSound(sound_path), 0); }                           // 播放音效
+    void stopMusic() { Mix_HaltMusic(); }                                                                                                   // 停止音乐
+    void stopSound() { Mix_HaltChannel(-1); }                                                                                               // 停止音效
+    void pauseMusic() { Mix_PauseMusic(); }                                                                                                 // 暂停音乐
+    void pauseSound() { Mix_Pause(-1); }                                                                                                    // 暂停音效
+    void resumeMusic() { Mix_ResumeMusic(); }                                                                                               // 恢复音乐
+    void resumeSound() { Mix_Resume(-1); }                                                                                                  // 恢复音效
+
+    // 场景函数
+    void changeScene(Scene *scene); // 切换场景
+
+    // 资源函数
+
     // 随机数方法
     float randomFloat(float min, float max) { return std::uniform_real_distribution<float>(min, max)(gen_); }
     int randomInt(int min, int max) { return std::uniform_int_distribution<int>(min, max)(gen_); }

@@ -11,6 +11,7 @@
 void SceneMain::init()
 {
     SDL_HideCursor();
+    game_.playMusic("assets/bgm/OhMyGhost.ogg");
     world_size_ = game_.getScreenSize() * 3.0f;                      // 世界尺寸为屏幕尺寸的三倍
     camera_pos_ = world_size_ / 2.0f - game_.getScreenSize() / 2.0f; // 相机位置
 
