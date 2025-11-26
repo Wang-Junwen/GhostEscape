@@ -1,5 +1,6 @@
 #include "game.h"
 #include "../scene_main.h"
+#include "../scene_title.h"
 #include "object_screen.h"
 #include "object_world.h"
 #include "actor.h"
@@ -81,7 +82,7 @@ void Game::init(std::string title, int width, int height)
     asset_store_ = new AssetStore(renderer_);
 
     // 创建场景
-    current_scene_ = new SceneMain();
+    current_scene_ = new SceneTitle();
     current_scene_->init();
 }
 
@@ -217,6 +218,11 @@ TTF_Text *Game::createTTFText(const std::string &text, const std::string &font_p
 {
     auto font = asset_store_->getFont(font_path, font_size);
     return TTF_CreateText(ttf_engine_, font, text.c_str(), 0);
+}
+
+bool Game::isMouseInRect(const glm::vec2 &top_left, const glm::vec2 &buttom_right)
+{
+    return mouse_pos_.x >= top_left.x && mouse_pos_.x <= buttom_right.x && mouse_pos_.y >= top_left.y && mouse_pos_.y <= buttom_right.y;
 }
 
 void Game::drawGrid(const glm::vec2 &top_left, const glm::vec2 &bottom_right, float grid_width, SDL_FColor fcolor)

@@ -67,6 +67,7 @@ public:
     int getHighScore() const { return high_score_; }
 
     void addScore(int score);
+    void quit() { is_running_ = false; };
 
     // 音频函数
     void playMusic(const std::string &music_path, bool loops = true) { Mix_PlayMusic(asset_store_->getMusic(music_path), loops ? -1 : 0); } // 播放音乐
@@ -95,12 +96,14 @@ public:
     void renderFillRect(const glm::vec2 &position, const glm::vec2 &size, float alpha);                                                        // 渲染实心矩形
     void renderHBar(const glm::vec2 &position, const glm::vec2 &size, float percent, SDL_FColor color);                                        // 渲染水平进度条
 
+    void drawGrid(const glm::vec2 &top_left, const glm::vec2 &bottom_right, float grid_width, SDL_FColor fcolor);         // 绘制网格
+    void drawBoundary(const glm::vec2 &top_left, const glm::vec2 &bottom_right, float boundary_width, SDL_FColor fcolor); // 绘制边界
+
     // 文字函数
     TTF_Text *createTTFText(const std::string &text, const std::string &font_path, int font_size = 16); // 创建TTF文本
 
     // 工具函数
-    void drawGrid(const glm::vec2 &top_left, const glm::vec2 &bottom_right, float grid_width, SDL_FColor fcolor);         // 绘制网格
-    void drawBoundary(const glm::vec2 &top_left, const glm::vec2 &bottom_right, float boundary_width, SDL_FColor fcolor); // 绘制边界
+    bool isMouseInRect(const glm::vec2 &top_left, const glm::vec2 &buttom_right); // 判断鼠标是否在矩形内
 };
 
 #endif

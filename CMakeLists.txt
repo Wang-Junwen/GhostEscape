@@ -63,10 +63,12 @@ add_executable(${TARGET}
                 src/screen/hud_stats.cpp
                 src/screen/hud_skill.cpp
                 src/screen/hud_text.cpp
+                src/screen/hud_button.cpp
                 src/player.cpp
                 src/enemy.cpp
                 src/main.cpp
                 src/scene_main.cpp
+                src/scene_title.cpp
                 src/spawner.cpp
                 src/weapon_thunder.cpp
                 )
