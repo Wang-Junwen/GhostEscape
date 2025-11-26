@@ -21,6 +21,7 @@ class Game
     SDL_MouseButtonFlags mouse_button_ = 0; // 鼠标按键状态
     bool is_running_ = true;                // 游戏是否运行
     Scene *current_scene_ = nullptr;        // 当前场景
+    Scene *next_scene_ = nullptr;           // 下一个场景
 
     Uint64 FPS_ = 60;        // 帧率
     Uint64 frame_delay_ = 0; // 帧延迟, 单位ns, init中计算
@@ -55,7 +56,14 @@ public:
 
     // getters and setters
     glm::vec2 getScreenSize() const { return screen_size_; }
+    void setScreenSize(glm::vec2 size) { screen_size_ = size; }
     Scene *getCurrentScene() const { return current_scene_; }
+    void setCurrentScene(Scene *sc) { current_scene_ = sc; }
+    Scene *getNextScene() const { return next_scene_; }
+    void setNextScene(Scene *sc) { next_scene_ = sc; }
+
+    Uint64 getFPS() const { return FPS_; }
+    Uint64 getFrameDelay() const { return frame_delay_; }
     AssetStore *getAssetStore() const { return asset_store_; }
     glm::vec2 getMousePos() const { return mouse_pos_; }
     void setMousePos(glm::vec2 pos) { mouse_pos_ = pos; }
@@ -66,6 +74,9 @@ public:
     int getScore() const { return score_; }
     int getHighScore() const { return high_score_; }
 
+    // 场景函数
+    void changeScene(Scene *scene); // 切换场景
+    void safeChangeScene(Scene *scene) {next_scene_ = scene;}; // 安全切换场景
     void addScore(int score);
     void quit() { is_running_ = false; };
 
@@ -79,8 +90,6 @@ public:
     void resumeMusic() { Mix_ResumeMusic(); }                                                                                               // 恢复音乐
     void resumeSound() { Mix_Resume(-1); }                                                                                                  // 恢复音效
 
-    // 场景函数
-    void changeScene(Scene *scene); // 切换场景
 
     // 资源函数
 

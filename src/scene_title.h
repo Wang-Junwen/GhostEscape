@@ -24,5 +24,6 @@ private:
     void renderBackground();
     void updateColor();
     void checkButtonQuit();
+    void checkButtonStart();
 };
 #endif // SCENE_TITLE_H

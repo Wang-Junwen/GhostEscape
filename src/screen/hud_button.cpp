@@ -16,7 +16,7 @@ HUDButton *HUDButton::addHUDButtonChild(Object *parent, glm::vec2 render_pos, co
     return hud_button;
 }
 
-void HUDButton::update(float dt)
+void HUDButton::update(float)
 {
     checkHover();
     checkState();

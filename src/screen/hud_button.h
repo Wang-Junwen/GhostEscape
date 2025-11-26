@@ -4,7 +4,6 @@
 #include "../core/object_screen.h"
 #include "../affiliate/sprite.h"
 
-
 class HUDButton : public ObjectScreen
 {
 protected:
@@ -19,7 +18,7 @@ protected:
 public:
     static HUDButton *addHUDButtonChild(Object *parent, glm::vec2 render_pos, const std::string &normal_file_path, const std::string &pressed_file_path, const std::string &hover_file_path, float scale = 1.0f, Anchor anchor = Anchor::CENTER);
 
-    virtual void update(float dt) override;
+    virtual void update(float) override;
     virtual void handleEvents(SDL_Event &event) override;
 
     void checkState();
@@ -29,9 +28,9 @@ public:
     void setSpriteNormal(Sprite *sprite) { sprite_normal_ = sprite; }
     void setSpritePressed(Sprite *sprite) { sprite_pressed_ = sprite; }
     void setSpriteHover(Sprite *sprite) { sprite_hover_ = sprite; }
-    Sprite *getSpriteNormal(Sprite *sprite) const { return sprite_normal_; }
-    Sprite *getSpritePressed(Sprite *sprite) const { return sprite_pressed_; }
-    Sprite *getSpriteHover(Sprite *sprite) const { return sprite_hover_; }
+    Sprite *getSpriteNormal() const { return sprite_normal_; }
+    Sprite *getSpritePressed() const { return sprite_pressed_; }
+    Sprite *getSpriteHover() const { return sprite_hover_; }
     bool getIsPressed() const { return is_pressed_; }
     bool getIsHover() const { return is_hover_; }
     bool getIsTriggered();

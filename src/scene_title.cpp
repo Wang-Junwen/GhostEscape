@@ -1,6 +1,7 @@
 #include "scene_title.h"
 #include "screen/hud_text.h"
 #include "screen/hud_button.h"
+#include "scene_main.h"
 #include <cmath>
 
 void SceneTitle::init()
@@ -10,6 +11,8 @@ void SceneTitle::init()
     HUDText::addHUDTextChild(this, "武 士 逃 生", game_.getScreenSize() / 2.0f - glm::vec2(0, 100), size, "assets/font/VonwaonBitmap-16px.ttf", 64);
     HUDText::addHUDTextChild(this, "最高分：" + std::to_string(game_.getHighScore()), game_.getScreenSize() / 2.0f + glm::vec2(0, 100), glm::vec2(200, 50), "assets/font/VonwaonBitmap-16px.ttf", 32);
 
+    button_start_ = HUDButton::addHUDButtonChild(this, game_.getScreenSize() / 2.0f + glm::vec2(-200, 200), "assets/UI/A_Start1.png", "assets/UI/A_Start3.png", "assets/UI/A_Start2.png", 2.0f, Anchor::CENTER);
+    button_credits_ = HUDButton::addHUDButtonChild(this, game_.getScreenSize() / 2.0f + glm::vec2(0, 200), "assets/UI/A_Credits1.png", "assets/UI/A_Credits3.png", "assets/UI/A_Credits2.png", 2.0f, Anchor::CENTER);
     button_quit_ = HUDButton::addHUDButtonChild(this, game_.getScreenSize() / 2.0f + glm::vec2(200), "assets/UI/A_Quit1.png", "assets/UI/A_Quit3.png", "assets/UI/A_Quit2.png", 2.0f, Anchor::CENTER);
 }
 
@@ -19,6 +22,7 @@ void SceneTitle::update(float dt)
     color_timer_ += dt;
     updateColor();
     checkButtonQuit();
+    checkButtonStart();
 }
 
 void SceneTitle::handleEvents(SDL_Event &event)
@@ -54,5 +58,13 @@ void SceneTitle::checkButtonQuit()
     if (button_quit_->getIsTriggered())
     {
         game_.quit();
+    }
+}
+
+void SceneTitle::checkButtonStart()
+{
+    if (button_start_->getIsTriggered())
+    {
+        game_.safeChangeScene(new SceneMain());
     }
 }
