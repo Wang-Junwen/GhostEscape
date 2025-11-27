@@ -14,6 +14,11 @@ HUDText *HUDText::addHUDTextChild(Object *parent, const std::string &text, glm::
     return hud_text;
 }
 
+void HUDText::setBgSizeByText(float margin)
+{
+    auto text_size = text_label_->getSize();
+    setBgSize(text_size + glm::vec2(margin, margin));
+}
 
 void HUDText::setBgSize(const glm::vec2 &bg_size)
 {

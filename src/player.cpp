@@ -40,9 +40,9 @@ void Player::update(float dt)
     Actor::update(dt); // 调用父类更新函数
 }
 
-void Player::handleEvents(SDL_Event &event)
+bool Player::handleEvents(SDL_Event &event)
 {
-    Actor::handleEvents(event); // 调用父类事件处理函数
+    return Actor::handleEvents(event); // 调用父类事件处理函数
 }
 
 void Player::render()

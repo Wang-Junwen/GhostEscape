@@ -239,6 +239,18 @@ bool Game::isMouseInRect(const glm::vec2 &top_left, const glm::vec2 &buttom_righ
     return mouse_pos_.x >= top_left.x && mouse_pos_.x <= buttom_right.x && mouse_pos_.y >= top_left.y && mouse_pos_.y <= buttom_right.y;
 }
 
+std::string Game::loadTextFile(const std::string &file_path)
+{
+    std::ifstream file(file_path);
+    std::string line;
+    std::string content;
+    while (std::getline(file, line))
+    {
+        content += line + "\n";
+    }
+    return content;
+}
+
 void Game::drawGrid(const glm::vec2 &top_left, const glm::vec2 &bottom_right, float grid_width, SDL_FColor fcolor)
 {
     SDL_SetRenderDrawColorFloat(renderer_, fcolor.r, fcolor.g, fcolor.b, fcolor.a);

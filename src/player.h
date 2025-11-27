@@ -28,7 +28,7 @@ class Player : public Actor
 public:
     virtual void init() override;
     virtual void update(float dt) override;
-    virtual void handleEvents(SDL_Event &event) override;
+    virtual bool handleEvents(SDL_Event &event) override;
     virtual void render() override;
     virtual void clean() override;
 

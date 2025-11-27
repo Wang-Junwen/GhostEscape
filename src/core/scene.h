@@ -15,13 +15,15 @@ protected:
     std::vector<ObjectWorld *> children_world_;   // 世界子对象列表
     std::vector<ObjectScreen *> children_screen_; // 屏幕子对象列表
 
+    bool is_pause_ = false;
+
 public:
     Scene() = default;
     virtual ~Scene() = default;
 
     virtual void init() override {};
     virtual void update(float dt) override;
-    virtual void handleEvents(SDL_Event &event) override;
+    virtual bool handleEvents(SDL_Event &event) override;
     virtual void render() override;
     virtual void clean() override;
 
@@ -30,13 +32,18 @@ public:
     glm::vec2 world2Screen(const glm::vec2 &worldPos) const { return worldPos - camera_pos_; }
     glm::vec2 screen2World(const glm::vec2 &screenPos) const { return screenPos + camera_pos_; }
 
+    void pause();
+    void resume();
+
     // getters and setters
     glm::vec2 getCameraPos() const { return camera_pos_; }
     void setCameraPos(const glm::vec2 &pos);
     glm::vec2 getWorldSize() const { return world_size_; }
     void setWorldSize(const glm::vec2 &size) { world_size_ = size; }
-    std::vector<ObjectWorld *> &getChildrenWorld()  { return children_world_; }
-    std::vector<ObjectScreen *> &getChildrenScreen()  { return children_screen_; }
+    std::vector<ObjectWorld *> &getChildrenWorld() { return children_world_; }
+    std::vector<ObjectScreen *> &getChildrenScreen() { return children_screen_; }
+    bool getIsPause() const { return is_pause_; }
+    void setIsPause(bool is_pause) { is_pause_ = is_pause; }
 };
 
 #endif // SCENE_H

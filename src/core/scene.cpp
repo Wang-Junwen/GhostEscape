@@ -2,24 +2,28 @@
 
 void Scene::update(float dt)
 {
-    Object::update(dt);
-    // 先更新世界物体，再更新屏幕物体
-    for (auto it = children_world_.begin(); it != children_world_.end();)
+    if (!getIsPause())
     {
-        auto child = *it;
-        if (child->getNeedRemove())
+
+        Object::update(dt);
+        // 先更新世界物体，再更新屏幕物体
+        for (auto it = children_world_.begin(); it != children_world_.end();)
         {
-            it = children_world_.erase(it);
-            child->clean();
-            delete child;
-            child = nullptr;
-            continue;
+            auto child = *it;
+            if (child->getNeedRemove())
+            {
+                it = children_world_.erase(it);
+                child->clean();
+                delete child;
+                child = nullptr;
+                continue;
+            }
+            if (child->getActive())
+            {
+                child->update(dt);
+            }
+            ++it;
         }
-        if (child->getActive())
-        {
-            child->update(dt);
-        }
-        ++it;
     }
     for (auto it = children_screen_.begin(); it != children_screen_.end();)
     {
@@ -39,24 +43,27 @@ void Scene::update(float dt)
         ++it;
     }
 }
-void Scene::handleEvents(SDL_Event &event)
+bool Scene::handleEvents(SDL_Event &event)
 {
-    Object::handleEvents(event);
     // 先处理屏幕事件，再处理世界事件
     for (auto &child : children_screen_)
     {
         if (child->getActive())
         {
-            child->handleEvents(event);
+            if (child->handleEvents(event)) return true;
         }
     }
+    if (getIsPause())
+        return false;
+    if (Object::handleEvents(event)) return true;
     for (auto &child : children_world_)
     {
         if (child->getActive())
         {
-            child->handleEvents(event);
+            if (child->handleEvents(event)) return true;
         }
     }
+    return false;
 }
 void Scene::render()
 {
@@ -120,6 +127,20 @@ void Scene::removeChild(Object *child)
         children_.erase(std::remove(children_.begin(), children_.end(), child), children_.end());
         break;
     }
+}
+
+void Scene::pause()
+{
+    setIsPause(true);
+    game_.pauseSound();
+    game_.pauseMusic();
+}
+
+void Scene::resume()
+{
+    setIsPause(false);
+    game_.resumeSound();
+    game_.resumeMusic();
 }
 
 void Scene::setCameraPos(const glm::vec2 &pos)

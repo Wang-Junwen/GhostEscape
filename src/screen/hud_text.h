@@ -15,6 +15,7 @@ protected:
 public:
     static HUDText *addHUDTextChild(Object *parent, const std::string &text, glm::vec2 renderPos, glm::vec2 size, const std::string &font_path = "assets/font/VonwaonBitmap-16px.ttf", int font_size = 32, const std::string &bg_path = "assets/UI/Textfield_01.png", Anchor anchor = Anchor::CENTER);
 
+    void setBgSizeByText(float margin = 50.0f);
     // setters and getters
     void setSpriteBg(Sprite *sprite_bg) { sprite_bg_ = sprite_bg; }
     void setTextLabel(TextLabel *text_label) { text_label_ = text_label; }

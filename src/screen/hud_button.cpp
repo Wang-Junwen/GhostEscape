@@ -1,16 +1,16 @@
 #include "hud_button.h"
 
-HUDButton *HUDButton::addHUDButtonChild(Object *parent, glm::vec2 render_pos, const std::string &normal_file_path, const std::string &pressed_file_path, const std::string &hover_file_path, float scale, Anchor anchor)
+HUDButton *HUDButton::addHUDButtonChild(Object *parent, glm::vec2 render_pos, const std::string &normal_file_path, const std::string &hover_file_path, const std::string &pressed_file_path, float scale, Anchor anchor)
 {
     auto hud_button = new HUDButton();
     hud_button->init();
     hud_button->setRenderPosition(render_pos);
     hud_button->sprite_normal_ = Sprite::addSpriteChild(hud_button, normal_file_path, scale, anchor);
-    hud_button->sprite_pressed_ = Sprite::addSpriteChild(hud_button, pressed_file_path, scale, anchor);
     hud_button->sprite_hover_ = Sprite::addSpriteChild(hud_button, hover_file_path, scale, anchor);
+    hud_button->sprite_pressed_ = Sprite::addSpriteChild(hud_button, pressed_file_path, scale, anchor);
     hud_button->sprite_normal_->setActive(true);
-    hud_button->sprite_pressed_->setActive(false);
     hud_button->sprite_hover_->setActive(false);
+    hud_button->sprite_pressed_->setActive(false);
     if (parent)
         parent->addChild(hud_button);
     return hud_button;
@@ -22,7 +22,7 @@ void HUDButton::update(float)
     checkState();
 }
 
-void HUDButton::handleEvents(SDL_Event &event)
+bool HUDButton::handleEvents(SDL_Event &event)
 {
     if (event.type == SDL_EVENT_MOUSE_BUTTON_DOWN)
     {
@@ -32,6 +32,7 @@ void HUDButton::handleEvents(SDL_Event &event)
             {
                 setPressed(true);
                 game_.playSound("assets/sound/UI_button08.wav");
+                return true;
             }
         }
     }
@@ -46,9 +47,11 @@ void HUDButton::handleEvents(SDL_Event &event)
                 {
                     setTriggered(true);
                 }
+                return true;
             }
         }
     }
+    return false;
 }
 
 void HUDButton::checkState()

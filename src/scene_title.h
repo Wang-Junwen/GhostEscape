@@ -4,6 +4,7 @@
 #include "core/scene.h"
 
 class HUDButton;
+class HUDText;
 class SceneTitle : public Scene
 {
 protected:
@@ -13,10 +14,12 @@ protected:
     HUDButton *button_start_;
     HUDButton *button_credits_;
     HUDButton *button_quit_;
+    HUDText *text_credits_;
+
 public:
     virtual void init() override;
     virtual void update(float dt) override;
-    virtual void handleEvents(SDL_Event &event) override;
+    virtual bool handleEvents(SDL_Event &event) override;
     virtual void render() override;
     virtual void clean() override;
 
@@ -25,5 +28,6 @@ private:
     void updateColor();
     void checkButtonQuit();
     void checkButtonStart();
+    void checkButtonCredits();
 };
 #endif // SCENE_TITLE_H

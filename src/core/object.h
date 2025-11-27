@@ -21,7 +21,7 @@ public:
 
     virtual void init() {}; // 需要初始化的事务，在init()函数里做
     virtual void update(float dt);
-    virtual void handleEvents(SDL_Event &event);
+    virtual bool handleEvents(SDL_Event &event);
     virtual void render();
     virtual void clean(); //  需要清理的资源，在clean()函数里做
 

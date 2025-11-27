@@ -16,10 +16,10 @@ protected:
     bool is_triggered_ = false;
 
 public:
-    static HUDButton *addHUDButtonChild(Object *parent, glm::vec2 render_pos, const std::string &normal_file_path, const std::string &pressed_file_path, const std::string &hover_file_path, float scale = 1.0f, Anchor anchor = Anchor::CENTER);
+    static HUDButton *addHUDButtonChild(Object *parent, glm::vec2 render_pos, const std::string &normal_file_path, const std::string &hover_file_path, const std::string &pressed_file_path, float scale = 1.0f, Anchor anchor = Anchor::CENTER);
 
     virtual void update(float) override;
-    virtual void handleEvents(SDL_Event &event) override;
+    virtual bool handleEvents(SDL_Event &event) override;
 
     void checkState();
     void checkHover();

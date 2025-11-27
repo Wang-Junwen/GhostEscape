@@ -7,27 +7,45 @@
 void SceneTitle::init()
 {
     Scene::init();
+    SDL_ShowCursor();
     auto size = glm::vec2(game_.getScreenSize().x / 2, game_.getScreenSize().y / 3);
     HUDText::addHUDTextChild(this, "武 士 逃 生", game_.getScreenSize() / 2.0f - glm::vec2(0, 100), size, "assets/font/VonwaonBitmap-16px.ttf", 64);
     HUDText::addHUDTextChild(this, "最高分：" + std::to_string(game_.getHighScore()), game_.getScreenSize() / 2.0f + glm::vec2(0, 100), glm::vec2(200, 50), "assets/font/VonwaonBitmap-16px.ttf", 32);
+    std::string text = game_.loadTextFile("assets/credits.txt");
 
-    button_start_ = HUDButton::addHUDButtonChild(this, game_.getScreenSize() / 2.0f + glm::vec2(-200, 200), "assets/UI/A_Start1.png", "assets/UI/A_Start3.png", "assets/UI/A_Start2.png", 2.0f, Anchor::CENTER);
-    button_credits_ = HUDButton::addHUDButtonChild(this, game_.getScreenSize() / 2.0f + glm::vec2(0, 200), "assets/UI/A_Credits1.png", "assets/UI/A_Credits3.png", "assets/UI/A_Credits2.png", 2.0f, Anchor::CENTER);
-    button_quit_ = HUDButton::addHUDButtonChild(this, game_.getScreenSize() / 2.0f + glm::vec2(200), "assets/UI/A_Quit1.png", "assets/UI/A_Quit3.png", "assets/UI/A_Quit2.png", 2.0f, Anchor::CENTER);
+    button_start_ = HUDButton::addHUDButtonChild(this, game_.getScreenSize() / 2.0f + glm::vec2(-200, 200), "assets/UI/A_Start1.png", "assets/UI/A_Start2.png", "assets/UI/A_Start3.png", 2.0f, Anchor::CENTER);
+    button_credits_ = HUDButton::addHUDButtonChild(this, game_.getScreenSize() / 2.0f + glm::vec2(0, 200), "assets/UI/A_Credits1.png", "assets/UI/A_Credits2.png", "assets/UI/A_Credits3.png", 2.0f, Anchor::CENTER);
+    button_quit_ = HUDButton::addHUDButtonChild(this, game_.getScreenSize() / 2.0f + glm::vec2(200), "assets/UI/A_Quit1.png", "assets/UI/A_Quit2.png", "assets/UI/A_Quit3.png", 2.0f, Anchor::CENTER);
+
+    text_credits_ = HUDText::addHUDTextChild(this, text, game_.getScreenSize() / 2.0f, glm::vec2(500, 500), "assets/font/VonwaonBitmap-16px.ttf", 16);
+    text_credits_->setBgSizeByText();
+    text_credits_->setActive(false);
 }
 
 void SceneTitle::update(float dt)
 {
-    Scene::update(dt);
     color_timer_ += dt;
     updateColor();
+    if (text_credits_->getActive())
+        return;
+
+    Scene::update(dt);
     checkButtonQuit();
     checkButtonStart();
+    checkButtonCredits();
 }
 
-void SceneTitle::handleEvents(SDL_Event &event)
+bool SceneTitle::handleEvents(SDL_Event &event)
 {
-    Scene::handleEvents(event);
+    if (text_credits_->getActive())
+    {
+        if (event.type == SDL_EVENT_MOUSE_BUTTON_UP)
+        {
+            text_credits_->setActive(false);
+            return true;
+        }
+    }
+    return Scene::handleEvents(event);
 }
 
 void SceneTitle::render()
@@ -66,5 +84,13 @@ void SceneTitle::checkButtonStart()
     if (button_start_->getIsTriggered())
     {
         game_.safeChangeScene(new SceneMain());
+    }
+}
+
+void SceneTitle::checkButtonCredits()
+{
+    if (button_credits_->getIsTriggered())
+    {
+        text_credits_->setActive(true);
     }
 }

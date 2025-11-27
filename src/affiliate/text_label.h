@@ -22,7 +22,7 @@ public:
     void setFontPath(const std::string &path);
     int getFontSize() { return font_size_; }
     void setFontSize(int size);
-    void setText(const std::string text) { TTF_SetTextString(ttf_text_, text.c_str(), 0); }
+    void setText(const std::string text);
     std::string getText() { return ttf_text_->text; }
 
 private:
