@@ -42,6 +42,7 @@ private:
     void checkButtonBack();
     void checkEndTimer();
     void saveData();
+    void checkSlowDown(float &dt);
 };
 
 #endif // SCENE_MAIN_H

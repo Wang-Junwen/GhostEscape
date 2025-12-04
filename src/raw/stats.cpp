@@ -49,7 +49,6 @@ void Stats::regenMana(float dt)
 
 void Stats::takeDamage(float damage)
 {
-    // if (is_invincible_ || !is_alive_)
     if (is_invincible_)
         return;
     health_ -= damage;
@@ -60,5 +59,4 @@ void Stats::takeDamage(float damage)
     }
     is_invincible_ = true;
     invincible_timer_ = 0.0f;
-    // SDL_Log("Actor took %.2f damage, current health: %.2f", damage, health_);
 }

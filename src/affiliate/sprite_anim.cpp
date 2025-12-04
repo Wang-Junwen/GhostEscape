@@ -14,7 +14,6 @@ SpriteAnim *SpriteAnim::addSpriteAnimChild(ObjectScreen *parent, const std::stri
 
 void SpriteAnim::update(float dt)
 {
-    if (is_finish_) SDL_Log("SpriteAnim finished");
     if (is_finish_) return;
 
     frame_timer_ += dt;

@@ -5,6 +5,7 @@
 
 class HUDButton;
 class HUDText;
+class UIMouse;
 class SceneTitle : public Scene
 {
 protected:
@@ -15,6 +16,7 @@ protected:
     HUDButton *button_credits_;
     HUDButton *button_quit_;
     HUDText *text_credits_;
+    UIMouse *ui_mouse_;
 
 public:
     virtual void init() override;

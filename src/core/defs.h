@@ -1,7 +1,7 @@
 #ifndef DEFS_H
 #define DEFS_H
 
-#define DEBUG_MODE
+// #define DEBUG_MODE
 
 enum class ObjectType
 {

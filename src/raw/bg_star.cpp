@@ -29,9 +29,9 @@ void BGStar::update(float dt)
 {
     // 更新颜色
     timer_ += dt;
-    color_far_ = {0.5f + 0.5f * std::sin(timer_ * 0.9f), 0.5f + 0.5f * std::sin(timer_ * 0.8f), 0.5f + 0.5f * std::sin(timer_ * 0.7f), 1.0f};
-    color_mid_ = {0.5f + 0.5f * std::sin(timer_ * 0.7f), 0.5f + 0.5f * std::sin(timer_ * 0.8f), 0.5f + 0.5f * std::sin(timer_ * 0.9f), 1.0f};
-    color_near_ = {0.5f + 0.5f * std::sin(timer_ * 0.6f), 0.5f + 0.5f * std::sin(timer_ * 0.7f), 0.5f + 0.5f * std::sin(timer_ * 0.8f), 1.0f};
+    color_far_ = {0.5f + 0.5f * std::sinf(timer_ * 0.9f), 0.5f + 0.5f * std::sinf(timer_ * 0.8f), 0.5f + 0.5f * std::sinf(timer_ * 0.7f), 1.0f};
+    color_mid_ = {0.5f + 0.5f * std::sinf(timer_ * 0.7f), 0.5f + 0.5f * std::sinf(timer_ * 0.8f), 0.5f + 0.5f * std::sinf(timer_ * 0.9f), 1.0f};
+    color_near_ = {0.5f + 0.5f * std::sinf(timer_ * 0.6f), 0.5f + 0.5f * std::sinf(timer_ * 0.7f), 0.5f + 0.5f * std::sinf(timer_ * 0.8f), 1.0f};
 }
 
 void BGStar::render()

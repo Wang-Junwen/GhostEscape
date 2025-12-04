@@ -50,17 +50,20 @@ bool Scene::handleEvents(SDL_Event &event)
     {
         if (child->getActive())
         {
-            if (child->handleEvents(event)) return true;
+            if (child->handleEvents(event))
+                return true;
         }
     }
     if (getIsPause())
         return false;
-    if (Object::handleEvents(event)) return true;
+    if (Object::handleEvents(event))
+        return true;
     for (auto &child : children_world_)
     {
         if (child->getActive())
         {
-            if (child->handleEvents(event)) return true;
+            if (child->handleEvents(event))
+                return true;
         }
     }
     return false;
@@ -88,10 +91,18 @@ void Scene::clean()
 {
     Object::clean();
     for (auto &child : children_world_)
+    {
         child->clean();
+        delete child;
+        child = nullptr;
+    }
     children_world_.clear();
     for (auto &child : children_screen_)
+    {
         child->clean();
+        delete child;
+        child = nullptr;
+    }
     children_screen_.clear();
 }
 

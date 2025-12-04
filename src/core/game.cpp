@@ -109,7 +109,7 @@ void Game::handleEvents()
 
 void Game::update(float dt)
 {
-    mouse_button_ = SDL_GetMouseState(&mouse_pos_.x, &mouse_pos_.y);
+    updateMouse();
     current_scene_->update(dt);
 }
 
@@ -250,6 +250,21 @@ std::string Game::loadTextFile(const std::string &file_path)
         content += line + "\n";
     }
     return content;
+}
+
+void Game::updateMouse()
+{   // 两种方法，保持系统鼠标和游戏鼠标一致性
+    mouse_button_ = SDL_GetMouseState(&mouse_pos_.x, &mouse_pos_.y);
+    // 1. 强制分辨率
+    int w, h;
+    SDL_GetWindowSize(window_, &w, &h);
+    SDL_SetWindowAspectRatio(window_, screen_size_.x / screen_size_.y, screen_size_.x / screen_size_.y);
+    mouse_pos_ *= screen_size_ / glm::vec2(w, h);
+
+    // // 2. 保持黑边，转换鼠标位置
+    // SDL_FRect rect;
+    // SDL_GetRenderLogicalPresentationRect(renderer_, &rect);
+    // mouse_pos_ = (mouse_pos_ - glm::vec2(rect.x, rect.y)) * screen_size_ / glm::vec2(rect.w, rect.h); // 将鼠标位置转换为屏幕坐标
 }
 
 void Game::drawGrid(const glm::vec2 &top_left, const glm::vec2 &bottom_right, float grid_width, SDL_FColor fcolor)

@@ -1,6 +1,7 @@
 #include "scene_title.h"
 #include "screen/hud_text.h"
 #include "screen/hud_button.h"
+#include "screen/ui_mouse.h"
 #include "scene_main.h"
 #include <cmath>
 #include <fstream>
@@ -8,8 +9,8 @@
 void SceneTitle::init()
 {
     Scene::init();
+    SDL_HideCursor();
     loadData("assets/score.dat");
-    SDL_ShowCursor();
     auto size = glm::vec2(game_.getScreenSize().x / 2, game_.getScreenSize().y / 3);
     HUDText::addHUDTextChild(this, "武 士 逃 生", game_.getScreenSize() / 2.0f - glm::vec2(0, 100), size, "assets/font/VonwaonBitmap-16px.ttf", 64);
     HUDText::addHUDTextChild(this, "最高分：" + std::to_string(game_.getHighScore()), game_.getScreenSize() / 2.0f + glm::vec2(0, 100), glm::vec2(200, 50), "assets/font/VonwaonBitmap-16px.ttf", 32);
@@ -22,6 +23,8 @@ void SceneTitle::init()
     text_credits_ = HUDText::addHUDTextChild(this, text, game_.getScreenSize() / 2.0f, glm::vec2(500, 500), "assets/font/VonwaonBitmap-16px.ttf", 16);
     text_credits_->setBgSizeByText();
     text_credits_->setActive(false);
+
+    ui_mouse_ = UIMouse::addUIMouseChild(this, "assets/UI/pointer_c_shaded.png", "assets/UI/pointer_c_shaded.png", 1.0f, Anchor::TOP_LEFT);
 }
 
 void SceneTitle::update(float dt)
@@ -29,7 +32,10 @@ void SceneTitle::update(float dt)
     color_timer_ += dt;
     updateColor();
     if (text_credits_->getActive())
+    {
+        ui_mouse_->update(dt);
         return;
+    }
 
     Scene::update(dt);
     checkButtonQuit();

@@ -44,7 +44,7 @@ bool Object::handleEvents(SDL_Event &event)
 
 void Object::render()
 {
-    for (auto child : children_)
+    for (auto &child : children_)
     {
         if (child->getActive())
         {
@@ -55,9 +55,11 @@ void Object::render()
 
 void Object::clean()
 {
-    for (auto child : children_)
+    for (auto &child : children_)
     {
         child->clean();
+        delete child;
+        child = nullptr;
     }
     children_.clear(); // delete all children
 }

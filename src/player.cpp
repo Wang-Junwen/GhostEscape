@@ -24,10 +24,11 @@ void Player::init()
     stats_ = Stats::addStatsChild(this);
 
     death_effect_ = Effect::addEffectChild(
-        nullptr,
+        game_.getCurrentScene(),
         "assets/effect/1764.png",
         glm::vec2(0.0f),
         2.0f);
+    death_effect_->setActive(false); // 初始不激活
     weapon_thunder_ = WeaponThunder::addWeaponThunderChild(this, 2.0f, 40.0f);
 }
 
@@ -142,8 +143,7 @@ void Player::checkIsDeath()
 {
     if (!stats_->getAlive())
     {
-        SDL_Log("Player is dead!");
-        game_.getCurrentScene()->safeAddChild(death_effect_);
+        death_effect_->setActive(true);
         death_effect_->setPosition(this->getPosition());
         setActive(false);
         game_.playSound("assets/sound/female-scream-02-89290.mp3");

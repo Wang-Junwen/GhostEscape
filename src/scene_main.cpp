@@ -21,7 +21,7 @@ void SceneMain::init()
     world_size_ = game_.getScreenSize() * 3.0f;                      // 世界尺寸为屏幕尺寸的三倍
     camera_pos_ = world_size_ / 2.0f - game_.getScreenSize() / 2.0f; // 相机位置
 
-    addChild(BGStar::addBGStarChild(this, 2000, 0.2f, 0.5f, 0.7f)); // 添加背景星空
+    BGStar::addBGStarChild(this, 2000, 0.2f, 0.5f, 0.7f); // 添加背景星空
 
     player_ = new Player();
     player_->init();
@@ -50,6 +50,7 @@ void SceneMain::init()
 
 void SceneMain::update(float dt)
 {
+    checkSlowDown(dt);
     Scene::update(dt);
     updateScore();
     checkButtonPause();
@@ -83,7 +84,7 @@ void SceneMain::saveData(const std::string &file_path)
     if (file.is_open())
     {
         // 保存得分
-        int score = game_.getScore();
+        int score = game_.getHighScore();
         file.write(reinterpret_cast<const char *>(&score), sizeof(score));
 
         file.close();
@@ -129,7 +130,8 @@ void SceneMain::checkButtonRestart()
     if (button_restart_->getIsTriggered())
     {
         saveData();
-        game_.safeChangeScene(new SceneMain());
+        auto scene = new SceneMain();
+        game_.safeChangeScene(scene);
     }
 }
 
@@ -138,7 +140,8 @@ void SceneMain::checkButtonBack()
     if (button_back_->getIsTriggered())
     {
         saveData();
-        game_.safeChangeScene(new SceneTitle());
+        auto scene = new SceneTitle();
+        game_.safeChangeScene(scene);
     }
 }
 
@@ -158,4 +161,13 @@ void SceneMain::checkEndTimer()
 void SceneMain::saveData()
 {
     saveData("assets/score.dat");
+}
+
+void SceneMain::checkSlowDown(float &dt)
+{
+    // 鼠标右键按下时，时间变慢
+    if (game_.getMouseButton() & SDL_BUTTON_RMASK)
+    {
+        dt *= 0.4f;
+    }
 }

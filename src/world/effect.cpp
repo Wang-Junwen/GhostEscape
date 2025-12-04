@@ -20,6 +20,17 @@ void Effect::update(float dt)
     checkFinish();
 }
 
+void Effect::clean()
+{
+    ObjectWorld::clean();
+    if (next_object_)
+    {
+        next_object_->clean();
+        delete next_object_;
+        next_object_ = nullptr;
+    }
+}
+
 void Effect::checkFinish()
 {
     if (sprite_ && sprite_->getFinish())
