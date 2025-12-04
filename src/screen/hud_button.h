@@ -37,5 +37,6 @@ public:
     void setTriggered(bool triggered) { is_triggered_ = triggered; }
     void setPressed(bool pressed) { is_pressed_ = pressed; }
     void setHover(bool hover) { is_hover_ = hover; }
+    void setScale(float scale);
 };
 #endif // HUD_BUTTON_H

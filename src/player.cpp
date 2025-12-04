@@ -4,10 +4,13 @@
 #include "affiliate/collider.h"
 #include "raw/stats.h"
 #include "affiliate/text_label.h"
+#include "raw/timer.h"
 
 void Player::init()
 {
     Actor::init(); // 调用父类初始化函数
+    flash_timer_ = Timer::addTimerChild(this, 0.4f);
+    flash_timer_->start(); // 开启闪烁计时器
     max_speed_ = 500.0f;
     sprite_idle_ = SpriteAnim::addSpriteAnimChild(this, "assets/sprite/samuri/IDLE-sheet.png", 2.0f);
     sprite_move_ = SpriteAnim::addSpriteAnimChild(this, "assets/sprite/samuri/RUN-sheet.png", 2.0f);
@@ -47,6 +50,7 @@ bool Player::handleEvents(SDL_Event &event)
 
 void Player::render()
 {
+    if (stats_->getInvincible() && flash_timer_->getProgress() < 0.5f) return;
     Actor::render(); // 调用父类渲染函数
 }
 

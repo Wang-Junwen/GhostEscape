@@ -9,6 +9,7 @@ class UIMouse;
 class HUDStats;
 class HUDText;
 class HUDButton;
+class Timer;
 class SceneMain : public Scene
 {
     Player *player_ = nullptr;            // 玩家指针
@@ -19,6 +20,8 @@ class SceneMain : public Scene
     HUDButton *button_pause_ = nullptr;   // 暂停按钮指针
     HUDButton *button_restart_ = nullptr; // 重置按钮指针
     HUDButton *button_back_ = nullptr;    // 返回按钮指针
+    Timer *end_timer_ = nullptr;              // 定时器指针
+
 public:
     SceneMain() = default;
     virtual ~SceneMain() = default;
@@ -35,6 +38,7 @@ private:
     void checkButtonPause();
     void checkButtonRestart();
     void checkButtonBack();
+    void checkEndTimer();
 };
 
 #endif // SCENE_MAIN_H

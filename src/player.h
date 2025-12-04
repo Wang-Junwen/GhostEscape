@@ -6,6 +6,8 @@
 #include "world/effect.h"
 #include "weapon_thunder.h"
 
+
+class Timer;
 class Player : public Actor
 {
     enum PlayerState {
@@ -24,6 +26,7 @@ class Player : public Actor
 
     Effect *death_effect_ = nullptr;
 
+    Timer *flash_timer_ = nullptr;
 
 public:
     virtual void init() override;
