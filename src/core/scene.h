@@ -6,6 +6,7 @@
 #include "object_screen.h"
 #include <glm/glm.hpp>
 #include <vector>
+#include <string>
 
 class Scene : public Object
 {
@@ -29,6 +30,10 @@ public:
 
     virtual void addChild(Object *child) override;    // 添加世界子对象
     virtual void removeChild(Object *child) override; // 移除世界子对象
+
+    virtual void saveData(const std::string &) {};
+    virtual void loadData(const std::string &) {};
+
     glm::vec2 world2Screen(const glm::vec2 &worldPos) const { return worldPos - camera_pos_; }
     glm::vec2 screen2World(const glm::vec2 &screenPos) const { return screenPos + camera_pos_; }
 

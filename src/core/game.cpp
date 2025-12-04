@@ -12,7 +12,8 @@ void Game::run()
     while (is_running_)
     {
         auto start = SDL_GetTicksNS();
-        if (next_scene_ != nullptr){
+        if (next_scene_ != nullptr)
+        {
             changeScene(next_scene_);
             next_scene_ = nullptr;
         }
@@ -161,8 +162,7 @@ void Game::clean()
 void Game::setScore(int score)
 {
     score_ = score;
-    if (score > high_score_)
-        high_score_ = score; // 更新最高分
+    setHighScore(score); // 更新最高分
 }
 
 void Game::addScore(int score)
@@ -172,7 +172,8 @@ void Game::addScore(int score)
 
 void Game::changeScene(Scene *scene)
 {
-    if (current_scene_){
+    if (current_scene_)
+    {
         current_scene_->clean();
         delete current_scene_;
     }
@@ -276,6 +277,16 @@ void Game::drawBoundary(const glm::vec2 &top_left, const glm::vec2 &bottom_right
             (bottom_right.x - top_left.x) + 2 * i,
             (bottom_right.y - top_left.y) + 2 * i};
         SDL_RenderRect(renderer_, &rect);
+    }
+    SDL_SetRenderDrawColorFloat(renderer_, 0, 0, 0, 1.0f); // 恢复默认颜色
+}
+
+void Game::drawPoints(const std::vector<glm::vec2> &points, glm::vec2 render_pos, SDL_FColor fcolor)
+{
+    SDL_SetRenderDrawColorFloat(renderer_, fcolor.r, fcolor.g, fcolor.b, fcolor.a);
+    for (const auto &point : points)
+    {
+        SDL_RenderPoint(renderer_, render_pos.x + point.x, render_pos.y + point.y);
     }
     SDL_SetRenderDrawColorFloat(renderer_, 0, 0, 0, 1.0f); // 恢复默认颜色
 }

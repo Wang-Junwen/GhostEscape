@@ -10,6 +10,8 @@
 #include "screen/hud_button.h"
 #include "scene_title.h"
 #include "raw/timer.h"
+#include "raw/bg_star.h"
+#include <fstream>
 
 void SceneMain::init()
 {
@@ -18,6 +20,8 @@ void SceneMain::init()
     game_.playMusic("assets/bgm/OhMyGhost.ogg");
     world_size_ = game_.getScreenSize() * 3.0f;                      // 世界尺寸为屏幕尺寸的三倍
     camera_pos_ = world_size_ / 2.0f - game_.getScreenSize() / 2.0f; // 相机位置
+
+    addChild(BGStar::addBGStarChild(this, 2000, 0.2f, 0.5f, 0.7f)); // 添加背景星空
 
     player_ = new Player();
     player_->init();
@@ -51,7 +55,9 @@ void SceneMain::update(float dt)
     checkButtonPause();
     checkButtonRestart();
     checkButtonBack();
-    if (player_ && !player_->getActive()) end_timer_->start();
+    if (player_ && !player_->getActive()) {
+        end_timer_->start();
+    }
     checkEndTimer();
 }
 
@@ -69,6 +75,19 @@ void SceneMain::render()
 void SceneMain::clean()
 {
     Scene::clean();
+}
+
+void SceneMain::saveData(const std::string &file_path)
+{
+    std::ofstream file(file_path, std::ios::binary);
+    if (file.is_open())
+    {
+        // 保存得分
+        int score = game_.getScore();
+        file.write(reinterpret_cast<const char *>(&score), sizeof(score));
+
+        file.close();
+    }
 }
 
 void SceneMain::renderBackground()
@@ -109,6 +128,7 @@ void SceneMain::checkButtonRestart()
 {
     if (button_restart_->getIsTriggered())
     {
+        saveData();
         game_.safeChangeScene(new SceneMain());
     }
 }
@@ -117,6 +137,7 @@ void SceneMain::checkButtonBack()
 {
     if (button_back_->getIsTriggered())
     {
+        saveData();
         game_.safeChangeScene(new SceneTitle());
     }
 }
@@ -131,4 +152,10 @@ void SceneMain::checkEndTimer()
     button_back_->setScale(4.0f);
     button_pause_->setActive(false);
     end_timer_->stop();
+    saveData();
+}
+
+void SceneMain::saveData()
+{
+    saveData("assets/score.dat");
 }

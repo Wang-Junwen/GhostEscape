@@ -3,10 +3,12 @@
 #include "screen/hud_button.h"
 #include "scene_main.h"
 #include <cmath>
+#include <fstream>
 
 void SceneTitle::init()
 {
     Scene::init();
+    loadData("assets/score.dat");
     SDL_ShowCursor();
     auto size = glm::vec2(game_.getScreenSize().x / 2, game_.getScreenSize().y / 3);
     HUDText::addHUDTextChild(this, "武 士 逃 生", game_.getScreenSize() / 2.0f - glm::vec2(0, 100), size, "assets/font/VonwaonBitmap-16px.ttf", 64);
@@ -57,6 +59,20 @@ void SceneTitle::render()
 void SceneTitle::clean()
 {
     Scene::clean();
+}
+
+void SceneTitle::loadData(const std::string &file_path)
+{
+    int high_score = 0;
+    std::ifstream file(file_path, std::ios::binary);
+    if (file.is_open())
+    {
+        // 读取最高分
+        file.read(reinterpret_cast<char *>(&high_score), sizeof(high_score));
+
+        file.close();
+    }
+    game_.setHighScore(high_score);
 }
 
 void SceneTitle::renderBackground()

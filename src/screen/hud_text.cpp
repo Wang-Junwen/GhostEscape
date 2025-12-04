@@ -6,9 +6,9 @@ HUDText *HUDText::addHUDTextChild(Object *parent, const std::string &text, glm::
     hud_text->init();
     hud_text->setRenderPosition(renderPos);
     hud_text->setSpriteBg(Sprite::addSpriteChild(hud_text, bg_path, 1, anchor));
-    hud_text->setTextLabel(TextLabel::addTextLabelChild(hud_text, text, font_path, font_size, anchor));
     hud_text->setBgSize(size);
-    hud_text->setText(text);
+    hud_text->setTextLabel(TextLabel::addTextLabelChild(hud_text, text, font_path, font_size, anchor));
+    // hud_text->setText(text);
     if (parent)
         parent->addChild(hud_text);
     return hud_text;

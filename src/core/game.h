@@ -72,13 +72,17 @@ public:
     SDL_MouseButtonFlags getMouseButton() const { return mouse_button_; }
     void setMouseButton(SDL_MouseButtonFlags button) { mouse_button_ = button; }
     void setScore(int score);
-    void setHighScore(int high_score) { high_score_ = high_score; }
+    void setHighScore(int high_score)
+    {
+        if (high_score > high_score_)
+            high_score_ = high_score;
+    }
     int getScore() const { return score_; }
     int getHighScore() const { return high_score_; }
 
     // 场景函数
-    void changeScene(Scene *scene); // 切换场景
-    void safeChangeScene(Scene *scene) {next_scene_ = scene;}; // 安全切换场景
+    void changeScene(Scene *scene);                              // 切换场景
+    void safeChangeScene(Scene *scene) { next_scene_ = scene; }; // 安全切换场景
     void addScore(int score);
     void quit() { is_running_ = false; };
 
@@ -91,7 +95,6 @@ public:
     void pauseSound() { Mix_Pause(-1); }                                                                                                    // 暂停音效
     void resumeMusic() { Mix_ResumeMusic(); }                                                                                               // 恢复音乐
     void resumeSound() { Mix_Resume(-1); }                                                                                                  // 恢复音效
-
 
     // 资源函数
 
@@ -109,13 +112,14 @@ public:
 
     void drawGrid(const glm::vec2 &top_left, const glm::vec2 &bottom_right, float grid_width, SDL_FColor fcolor);         // 绘制网格
     void drawBoundary(const glm::vec2 &top_left, const glm::vec2 &bottom_right, float boundary_width, SDL_FColor fcolor); // 绘制边界
+    void drawPoints(const std::vector<glm::vec2> &points, glm::vec2 render_pos, SDL_FColor fcolor);                       // 绘制点集
 
     // 文字函数
     TTF_Text *createTTFText(const std::string &text, const std::string &font_path, int font_size = 16); // 创建TTF文本
 
     // 工具函数
     bool isMouseInRect(const glm::vec2 &top_left, const glm::vec2 &buttom_right); // 判断鼠标是否在矩形内
-    std::string loadTextFile(const std::string &file_path); // 加载文本文件
+    std::string loadTextFile(const std::string &file_path);                       // 加载文本文件
 };
 
 #endif

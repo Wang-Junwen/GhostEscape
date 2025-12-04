@@ -32,6 +32,8 @@ public:
     virtual void render() override;
     virtual void clean() override;
 
+    virtual void saveData(const std::string &file_path) override;
+
 private:
     void renderBackground();
     void updateScore();
@@ -39,6 +41,7 @@ private:
     void checkButtonRestart();
     void checkButtonBack();
     void checkEndTimer();
+    void saveData();
 };
 
 #endif // SCENE_MAIN_H
